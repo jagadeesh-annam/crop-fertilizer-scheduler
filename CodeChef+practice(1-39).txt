@@ -1,0 +1,5169 @@
+consecutive integer checking to find GCD
+# update the function below
+
+def gcd_brute_force(a, b):
+    # Find the smaller of the two numbers
+    
+    m = min(a,b)
+
+
+    # Start from the smaller number and work our way down
+    
+    for i in range(m,1,-1):
+        if(a%i==0 and b%i==0):
+            return i
+            
+    return 1
+
+
+
+# Get test cases 't'
+t = int(input())
+
+for _ in range(t):
+    # Get user input
+    a, b = map(int, input().split())
+    
+    # Calculate and print the GCD
+    result = gcd_brute_force(a, b)
+    print(result)
+    --------------------------------------------------------------
+    middle school procedure for finding GCD
+ def prime_factors(n):
+    factors = []
+    d = 2
+    while n > 1:
+        while n % d == 0:
+            factors.append(d)
+            n //= d
+        d += 1
+        if d * d > n:
+            if n > 1:
+                factors.append(n)
+            break
+    return factors
+
+# Solution as follows
+def gcd_middle_school(a, b):
+    factors_a = prime_factors(a)
+    factors_b = prime_factors(b)
+    
+    gcd = 1
+    i, j = 0, 0
+    while i < len(factors_a) and j < len(factors_b):
+        if factors_a[i] == factors_b[j]:
+            gcd = gcd * factors_a[i]
+            i += 1
+            j += 1
+        elif factors_a[i] < factors_b[j]:
+            i += 1
+        else:
+            j += 1
+    
+    return gcd
+
+t = int(input())
+for _ in range(t):
+    a, b = map(int, input().split())
+    result = gcd_middle_school(a, b)
+    print(result)   
+    -----------------------------------------------------
+    implement euclids algorithm GCD 
+# Solution as follows
+
+def gcd_euclid(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+    
+# Get test cases 't'
+t = int(input())
+
+for _ in range(t):
+    # Get user input
+    a, b = map(int, input().split())
+    
+    # Calculate and print the GCD
+    result = gcd_euclid(a, b)
+    print(result)
+    -------------------------------------------------------
+    collisions 
+
+# cook your dish here
+
+def combinations(arr):
+    ans =0
+    
+    for j in range(len(arr[0])):
+        n =0
+        for i in range(len(arr)):
+            if( arr[i][j] == 1 ):
+                n += 1
+        ans += n*(n-1)//2  
+        
+    return ans
+        
+                
+            
+
+
+t = int(input())
+
+for _ in range(t):
+    
+    r,c = map( int , input().split(" ") )
+    
+    arr = []
+    
+    for _ in range(r):
+        l = input()
+        l = [ int(c) for c in l ]
+        arr.append(l)
+        
+    print( combinations(arr) )
+    --------------------------------------------------
+    Distribute Appels 
+# cook your dish here
+
+def apples(app , box):
+    if( box == 1 ):
+        return "NO"
+    
+    if( (app//box)%box == 0 ):
+        return "NO"
+        
+    return "YES"
+    
+
+
+t = int(input())
+
+
+for _ in range(t):
+    
+    app , box = map(int , input().split(" ") )
+    
+    print( apples(app , box) )
+---------------------------------------------------
+///EAT TWICE::
+
+# cook your dish here
+import heapq
+
+
+def maxtaste(mp):
+   
+    val = list(mp.values())
+   
+    values = [ -v for v in val ]
+   
+    heapq.heapify(values)
+   
+    max1 = -heapq.heappop(values)
+    max2 = -heapq.heappop(values)
+   
+    return max1 + max2
+   
+
+t = int(input())
+
+for _ in range(t):
+   
+    l,d = map(int ,input().split() )
+   
+    mp = {}
+   
+    for _ in range(l):
+        k,v = map(int , input().split())
+       
+        if k in mp:
+            mp[k] = max(mp[k] , v)
+        else:
+            mp[k] = v
+           
+   
+    print(maxtaste(mp))
+   ===================================================================
+//LCM HATES GCD::
+
+
+# cook your dish here
+
+
+def gcd(a , b):
+    if( b==0 ):
+        return a
+   
+    return  gcd( b , a%b )
+   
+
+def lcm(a,b):
+    return a*b//gcd(a,b)
+   
+   
+def minfun(a,b):
+   
+    x = gcd(a,b)
+   
+    return lcm(a,x)-gcd(b,x)
+   
+
+t = int(input())
+
+for _ in range(t):
+   
+    a,b = map(int , input().split() )
+   
+    print( minfun(a,b) ) 
+===================================================================
+//MEAN AND MEDIAN
+
+# cook your dish here
+
+
+t = int(input())
+
+for _ in range(t):
+   
+    mean , median = map(int , input().split(" ") )
+   
+    print( 3*mean-2*median , median , median  )
+================================================================
+//VALID EXPRESSION
+# cook your dish here
+
+def expression(opp, val):
+    # condition check
+    if( val > opp +1 or val < -opp+1 ):
+        return "-1"
+       
+    if val == 1 :
+        return "*"*opp
+    if val == 0:
+        return "-" + "*"*(opp-1)
+   
+    if val > 1 :
+        mul = val-1
+        return "+"*mul + "*"*(opp-mul)
+        return
+    if val <=-1:
+        mul = -val + 1
+        return "-"*mul + "*"*(opp-mul)
+       
+   
+
+
+t = int(input())
+for _ in range(t):
+    opperations , val = map(int , input().split() )
+    print(expression(opperations,val))
+=====================================================================
+//Practice Recursion: Advanced
+//ALL POSSIBLE SUBSETS::
+
+
+def all_possible_subsets(arr, cur_index,  cur_subset, all_subsets):
+    #Write your code here
+    if( cur_index == len(arr) ):
+        newset = [x for x in cur_subset]
+        all_subsets.append(newset)
+        return
+   
+    cur_subset.append(arr[cur_index])
+   
+    all_possible_subsets(arr, cur_index+1,  cur_subset, all_subsets)
+   
+    cur_subset.pop()
+   
+    all_possible_subsets(arr, cur_index+1,  cur_subset, all_subsets)
+
+   
+n = int(input())
+arr = list(map(int, input().split()))
+cur_subset = []
+all_subsets = []
+all_possible_subsets(arr, 0, cur_subset, all_subsets)
+all_subsets = sorted(all_subsets)
+for subset in all_subsets:
+    print(*subset)
+===================================================================
+//BREAKING UNIQU COMBINATIONS SUMS
+
+T = int(input())
+
+for _ in range(T):
+    N, B = map(int,input().split())
+    A = sorted(list(set(map(int,input().split()))))
+    N = len(A)
+   
+    combs = []
+    def trycombs(L, ib):
+        n = sum(L)
+        if ib >= N or A[ib] + n > B:
+            return
+        for i in range(ib,N):
+            a = A[i]
+            if n + a == B:
+                combs.append(L + [a])
+            elif n + a < B:
+                trycombs(L + [a], i)
+            else:
+                break
+   
+    trycombs([],0)
+    print(len(combs))
+    for c in combs:
+        print(*c)
+=================================================================
+//CHESS COIN FLIPPING GAME
+
+def countWays(S):
+    if S < 0:
+        return 0
+    if S == 0:
+        return 1
+    return countWays(S - 1) + countWays(S - 2)
+
+if __name__ == "__main__":
+    S = int(input())
+    print(countWays(S))
+=================================================================
+//Generate All Possible Pairs of Balanced Parenthese
+
+def generateParenthesis(n):
+    def backtrack(s='', left=0, right=0):
+        if len(s) == 2 * n:
+            result.append(s)
+            return
+        if left < n:
+            backtrack(s + '(', left + 1, right)
+        if right < left:
+            backtrack(s + ')', left, right + 1)
+   
+    result = []
+    backtrack()
+    return result
+
+# Get user input
+n = int(input())
+result = generateParenthesis(n)
+
+# Print each balanced parenthesis string on a new line
+for parentheses in result:
+    print(parentheses)
+====================================================================
+//SEARCH WORD
+
+def dfs(board, word, i, j, k):
+    if k == len(word):
+        return True
+    if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]) or board[i][j] != word[k]:
+        return False
+    tmp = board[i][j]
+    board[i][j] = '#'  # Mark as visited
+    found = (dfs(board, word, i + 1, j, k + 1) or
+             dfs(board, word, i - 1, j, k + 1) or
+             dfs(board, word, i, j + 1, k + 1) or
+             dfs(board, word, i, j - 1, k + 1))
+    board[i][j] = tmp  # Restore original value
+    return found
+
+def word_search(board, word):
+    for i in range(len(board)):
+        for j in range(len(board[0])):
+            if dfs(board, word, i, j, 0):
+                return True
+    return False
+
+if __name__ == "__main__":
+    R, C = map(int, input().split())
+    board = [input().split() for _ in range(R)]
+    word = input().strip() # Correct way to read grid
+    print("true" if word_search(board, word) else "false")
+======================================================================
+//UNIQUE SUBSET
+
+
+from typing import List
+
+def backtrack(multiset: List[int], start: int, path: List[int], subsets: List[List[int]]):
+    subsets.append(path.copy())
+   
+    for i in range(start, len(multiset)):
+        if i > start and multiset[i] == multiset[i - 1]:
+            continue
+       
+        path.append(multiset[i])
+        backtrack(multiset, i + 1, path, subsets)
+        path.pop()
+
+def unique_subsets(multiset: List[int]) -> List[List[int]]:
+    multiset.sort()
+    subsets = []
+    path = []
+    backtrack(multiset, 0, path, subsets)
+    return subsets
+
+def print_subsets(subsets: List[List[int]]):
+    subsets.sort()
+    for subset in subsets:
+        print(f"[{' '.join(map(str, subset))}]")
+
+def main():
+    try:
+        n = int(input())
+        multiset = list(map(int, input().split()))
+    except ValueError as e:
+        print(f"Invalid input: {e}")
+        return
+
+    result = unique_subsets(multiset)
+    print_subsets(result)
+
+if __name__ == "__main__":
+    main()
+=======================================================================
+//UNIQUE PRREMUTATIONS::
+
+
+def backtrack(multiset, used, path, permutations):
+    # If the current path length equals the multiset length, add it to permutations
+    if len(path) == len(multiset):
+        permutations.append(path[:])
+        return
+   
+    for i in range(len(multiset)):
+        # Skip used elements or skip duplicates to avoid duplicate permutations
+        if used[i] or (i > 0 and multiset[i] == multiset[i - 1] and not used[i - 1]):
+            continue
+       
+        # Include current element in path
+        path.append(multiset[i])
+        used[i] = True
+       
+        # Recurse
+        backtrack(multiset, used, path, permutations)
+       
+        # Backtrack
+        used[i] = False
+        path.pop()
+
+def uniquePermutations(multiset):
+    # Sort the multiset to handle duplicates easily
+    multiset.sort()
+   
+    # Resultant list of permutations
+    permutations = []
+   
+    # Temporary list to store the current permutation
+    path = []
+   
+    # Boolean array to keep track of used elements
+    used = [False] * len(multiset)
+   
+    # Start backtracking from index 0
+    backtrack(multiset, used, path, permutations)
+   
+    # Return the list of unique permutations
+    return permutations
+
+def printPermutations(permutations):
+    for permutation in permutations:
+        print("[", end="")
+        for i in range(len(permutation)):
+            print(permutation[i], end="")
+            if i < len(permutation) - 1:
+                print(" ", end="")
+        print("]")
+
+if _name_ == "_main_":
+    n = int(input())
+   
+    multiset = list(map(int, input().split()))
+   
+    # Get the unique permutations
+    result = uniquePermutations(multiset)
+   
+    # Print the unique permutations
+    printPermutations(result)
+===============================================================
+NUMBER OF DIGITS IN BINARY USING RECURSION 
+
+# Update the functions below
+
+def int_to_binary(n):
+    if(n==0):
+        return 0
+        
+    if( n%2 ==1 ):
+        return int_to_binary(n//2)*10 + 1
+        
+    return int_to_binary(n//2)*10 + 0
+
+
+
+
+
+def count_binary_digits(n):
+    
+    if(n ==0):
+        return 0
+    
+    return 1 + count_binary_digits(n//2)
+
+
+
+# Read the number of test cases
+T = int(input())
+
+# Process each test case
+for _ in range(T):
+    N = int(input())
+    binary = int_to_binary(N)
+    digit_count = count_binary_digits(N)
+    print(digit_count)
+    ==============================================
+PRINT PATTREN  
+
+
+def print_pattern(n):
+    #Write your code here
+    
+    for i in range(n):
+        for j in range(n):
+            if(i<=j):
+                print("*" , end = "")
+            
+        print("")
+
+n = int(input())
+print_pattern(n)
+=====================================================
+LINEAR SEARCH USING Recursion 
+
+# cook your dish here
+def linear_search(Arr, n, x):
+    #Write your code here
+    if( len(Arr) == n ):
+        return -1
+        
+    if( Arr[n] == x):
+        return n
+        
+    return linear_search(Arr, n+1 , x )
+
+n, x = map(int, input().split())
+Arr = list(map(int, input().split()))
+print(linear_search(Arr, 0, x))
+=======================================================
+
+CHECK PALINDROME
+
+# cook your dish here
+def check_palindrome(s, n):
+    #Write your code here
+    if( len(s) == n ):
+        return "YES"
+        
+    if( s[n] == s[len(s)-1-n] ):
+        return check_palindrome(s,n+1)
+        
+    return "NO"
+    
+    
+s = input()
+print(check_palindrome(s, 0))
+=================================================
+RECURSION - DECIMAL TO BINARY 
+
+def Binary(n):
+    #Write your code here
+    if( n ==0 ):
+        return ""
+        
+    if( n%2 ==0 ):
+        return Binary(n//2)+ "0"
+        
+    return Binary(n//2) + "1"
+
+n = int(input())
+print(Binary(n))
+
+===========================================
+
+UNIQUE ELEMENTS IN AN ARRAY 
+
+def find_unique_recursive(arr, index=0, unique_set=None):
+    if unique_set is None:
+        unique_set = set()
+    if index == len(arr):
+        return sorted(unique_set)
+        
+    unique_set.add(arr[index])
+    
+    return find_unique_recursive(arr, index + 1, unique_set)
+
+
+
+
+
+# accept test cases
+t = int(input())
+for _ in range(t):
+    # Input
+    n = int(input())
+    arr = list(map(int, input().split()))
+    
+    # Find unique elements
+    unique_elements = find_unique_recursive(arr)
+    
+    # Output
+    print(*unique_elements)
+    
+===============================================
+
+TOWER OF HANOI 
+
+# Update the code below this line
+def tower_of_hanoi(n, source, destination, auxiliary):
+    
+    if n ==0 :
+        return 
+    
+    tower_of_hanoi(n-1 , source , auxiliary , destination )
+    
+    print("Move disk" , n , "from rod" ,source , "to rod" , destination )
+    
+    
+    tower_of_hanoi( n-1 , auxiliary , destination , source )
+
+
+
+
+
+
+def solve_tower_of_hanoi(n):
+    print(f"Tower of Hanoi solution for {n} disks:")
+    tower_of_hanoi(n, 1, 3, 2)
+    print(f"Total number of moves: {2**n - 1}")
+
+n = int(input())
+solve_tower_of_hanoi(n)
+================================================
+SUM OF N NUTURAL NUMBERS 
+
+def Sum(n):
+    print(f"Sum({n}) is called")
+    if n==1:
+        print("Base Condition reached")
+        return 1
+    sumN1 = Sum(n-1)
+    print(f"Sum({n}) = {n} + Sum({n-1})")
+    
+    sumN = n + sumN1
+    print(f"Sum({n}) = {n} + {sumN1}")
+    
+    print(f"Sum({n}) is returning {sumN}")
+    return sumN
+    
+print("Sum of first 5 natural numbers is", Sum(5))
+===================================================
+FACTORIAL  
+
+def Factorial(n):
+    # Write your code here
+    if(n ==0):
+        return 1
+    return n*Factorial(n-1)
+
+n = int(input())
+print(Factorial(n))
+
+==============================================
+
+FIBONACCI SERIES  
+
+def fib(n):
+    #Write your code here
+    if( n==1 ):
+        return 0
+    if(n==2):
+        return 1
+        
+    return fib(n-1)+fib(n-2)
+    
+n = int(input())
+print(fib(n))
+
+==================================================
+Multi Correct         
+1.upper_bound(A,A+n,num) – A
+2.The first student cannot be part of any pair.
+The first two students cannot be part of the same pair.
+3.(Student 1, Student 2)
+(Student 2, Student 3)
+4.Picking (Student 1, Student 2) is always optimal.
+5.When the whole string is "xyxy".
+When the whole string is "xyxyxy".
+6. Job Scheduling Answer 8
+7. Job Scheduling Answer 6
+8. Prims Algorithm Answer N-1
+9. Both First and Second
+10. Greedy Stratagey Answer 2 and 3
+11. 0 and 0
+12. Base Case 0
+13. Circular Linked List 11 and 12
+14. F[i] and 0
+15. Any two adjacent vertices in the path must in adjacent in the graph.
+No vertex should be visited more than once (except the starting vertex).
+Starting and ending vertex should be the same.
+16.The sum of integers in the subset must be X.
+17.For X = 3, Y = 4, Z = 12, The animal on the farm is 'ANY'.
+   X = 3, Y = 5, Z = 13, The animal on the farm is 'NONE'
+   X = 3, Y = 5, Z = 9, The animal on the farm is 'CHICKEN'
+
+
+18. If X = 18, minimum number of problems Chef marked incorrect are 0.
+    If X = 20, minimum number of problems Chef marked incorrect are 1.
+
+
+=====================================================
+
+Problem 3 (High Accuracy) - Solve sub-components
+
+#Update the '_' below to solve the problem
+
+#Update the '_' below to solve the problem
+
+X = 30
+if X%3 == 0:
+    print('Number of questions incorrctly solved is 0')
+elif (X+1)%3 == 0:
+    print('Number of questions incorrctly solved is 1')
+else:
+    print('Number of questions incorrctly solved is 2')
+    
+X = 34
+if X%3 == 0:
+    print('Number of questions incorrctly solved is 0')
+elif (X+1)%3 == 0:
+    print('Number of questions incorrctly solved is 1')
+else:
+    print('Number of questions incorrctly solved is 2')
+
+===============================================
+
+Problem(High Accuracy)- Solve the complete problem
+
+# Update the program below to solve the problem
+
+t = int(input())            
+for i in range(t):          
+    X = int(input())
+    
+    print( (3-X%3)%3 )
+
+=================================================
+
+Array construction
+
+# Update the '_' in the code below to solve the problem
+
+t = int(input())
+for i in range(t):
+    N = int(input())
+    A = []
+    for i in range(N):
+        A.append(i+1)
+    #print the array A
+    print(A)              
+    #print only the elements from array A
+    print(*A)               
+    A.sort(reverse = True)
+    #print the array A sorted in descending order
+    print(A)                
+
+========================================================
+Practice problem - Different Consecutive Chars
+
+# Update the code below to solve the problem
+
+t = int(input())
+for i in range(t):
+    N = int(input())
+    S = input()
+    ans =0
+    for i in range( N-1 ):
+        if( S[i] == S[i+1] ):
+            ans = ans +1
+            
+    print(ans)
+            
+ =================================================   
+
+Create a list of ord values of a string
+
+# Update the '_' below to solve this problem
+
+t = int(input())
+for _ in range(t):
+    S = input()
+    A = []
+    
+    for i in S:
+        #Converts a character into its ASCII value
+        A.append(ord(i))    
+    
+    print(*A)
+=============================================
+
+Numerical characters in strings
+
+#Update the '_' in the code below to solve this problem
+
+t = int(input())
+for i in range(t):
+    A = input()
+    B = input()
+    
+    i = 0
+    n = len(A)
+    #Flag is a very imporant tool in programming problems - you will come across various examples in later problems as well
+    flag = 0
+    
+    while i<n:
+        #Checking A from left to right and B from right to left
+        if A[i]==B[n-i-1]:      
+            i = i + 1
+        else:
+            #If specific character in A and B do not match, then they cannot be reverse of each other
+            flag = 1
+            break
+    
+    if flag==1:
+        print('NO')
+    else:
+        print('YES')
+
+==============================================
+Practice problem - Wordle
+
+# Update the code below to solve the problem
+
+t = int(input())
+for i in range(t):
+    S = input()
+    T = input()
+    
+    ans = ""
+    
+    for i,j in zip(S,T):
+        if i == j:
+            ans = ans + "G"
+        else :
+            ans = ans + "B"
+            
+    print(ans)
+
+===========================================
+Practice problem - Chef and Happy String
+
+
+# Update the code below to solve the problem
+
+t = int(input())
+for i in range(t):
+    S = input()
+    
+    flag = False
+    
+    v = "aeiou"
+    
+    for i in range(len(S)-2):
+        if(S[i] in v and S[i+1] in v and S[i+2] in v  ):
+            flag = True
+            
+    if(flag):
+        print("HAPPY")
+        
+    else:
+        print("SAD")
+
+
+Collisions
+
+
+
+
+
+===================================================
+
+
+Practice problem - World Chess Championship
+
+# Update the code below to solve the problem
+
+t = int(input())
+for i in range(t):
+    X = int(input())
+    S = input()
+
+    c = 0
+    n = 0
+    
+    d =0
+    
+    for i in S :
+        if(i == 'N'):
+            n = n+2
+            
+        if(i == 'C'):
+            c = c+2
+            
+        if(i == 'D'):
+            d = d+1
+            
+    if( c== n ):
+        print( 55*X )
+    elif( c > n ) :
+        print( 60*X )
+    else:
+        print(40 *X)
+    
+    
+
+
+
+
+
+==============================================
+
+Count positive and non-zero elements
+
+# Update the '_' in the code below to solve the problem
+
+t = int(input())
+for i in range(t):
+    N, k = map(int, input().split())
+    A = list(map(int, input().split()))
+    
+    #Declare and initialise variables - pos, neg and divk
+    #Note that we are reinitializing the variables to be 0 for each test case.
+    pos = 0
+    neg = 0
+    divk = 0
+    
+    i = 0
+    #Loop through all elements of the array
+    while i < len(A):
+        #Count the negative elements of the array
+        if A[i]< 0:
+            neg = neg + 1
+        #Count the positive elements of the array
+        elif A[i] > 0:
+            pos = pos + 1
+        #Count if the given element is divisible by k
+        if A[i]%k == 0:
+            divk = divk + 1
+        i = i + 1
+    
+    print(pos,neg,divk)
+
+
+==============================================
+Practice problem - Penalty Shots
+
+
+# Update the blanks in the code below to solve the problem
+
+t = int(input())
+for i in range(t):
+    A = list(map(int,input().split()))
+    
+    #Calculate and store Team-1 and Team-2 scores
+    team1 = A[0] + A[2] + A[4] + A[6] + A[8]
+    team2 = A[1] + A[3] + A[5] + A[7] + A[9]
+    
+    #Apply relevant conditions to check for victory
+    if team1 > team2:
+        print(1)
+    elif team1 < team2:
+        print(2)
+    else:
+        print(0)
+    
+=============================================
+Debug this code - Non-Negative Product
+
+
+# this code has some logical error - debug this code to solve the problem
+
+t = int(input())
+for i in range(t):
+    n = int(input())
+    A = list(map(int,input().split()))
+    
+    count_neg = 0
+    count_zero = A.count(0)
+    
+    if count_zero > 0:
+        print(0)
+    else:
+        i = 0
+        while i<n:
+            if A[i] < 0:
+                count_neg = count_neg + 1
+            i = i + 1
+        
+        if count_neg%2 != 0:
+            print(1)
+            
+        else :
+            print(0)
+
+
+max(), min() and sum() functions
+
+# Update the code below to solve the problem
+t = int(input())
+for i in range(t):
+    N = int(input())
+    A = list(map(int, input().split()))
+    #highest element of the list
+    highest = max(A)
+    #smallest element of the list
+    smallest = min(A)
+    #sum of all the elements of the list
+    total = sum(A)
+    print(highest, smallest, total)
+
+
+count(), index() functions
+
+
+# Update the blanks below to solve the problem
+
+t = int(input())
+for i in range(t):
+    N, X = map(int, input().split())
+    A = list(map(int, input().split()))
+    #variable to store the count of X
+    occurrence = A.count(X)
+    #variable to store the position / index of X
+    index = A.index(X)
+    print(occurrence, index)
+
+
+del() function
+
+
+# Update the blanks in the code below to solve the problem
+
+t = int(input())
+for i in range(t):
+    N, X = map(int, input().split())
+    A = list(map(int, input().split()))
+    #We need to remove the element at the Xth position
+    #Python lists are 0 indexed
+    del A[X-1]
+    #print only the N-1 space separated integers - not the list
+    print(*A)
+
+
+set() function
+
+# Update the blanks below to solve the problem
+
+t = int(input())
+for i in range(t):
+    n = int(input())
+    A = list(map(int, input().split()))
+    #Unique elements of A using Set()
+    #* is used in the syntax as we want only the values - print without the '*' to check the output
+    print(*set(A))
+=============================================
+
+Practice problem for array functions
+
+# Update the blanks below to solve the problem
+
+t = int(input())
+for i in range(t):
+    n = int(input())
+    A = list(map(int, input().split()))
+    #Unique elements of A using Set()
+    print(*set(A))
+    
+    #Create an empty list to store frequency of elements in A
+    frequency = []
+    for i in set(A):
+        #count the occurence of element 'i' in A
+        count = A.count(i)
+        #append the count of 'i' to the frequency list
+        frequency.append(count)
+    #print the occurence of each element in A
+    print(*frequency)
+
+====================================================
+Practice problem - Count the Holidays
+
+
+# Solution as follows
+
+t = int(input())
+for i in range(t):
+    N = int(input())
+    A = list(map(int, input().split()))
+    
+    # Weekend holiday dates
+    weekend = [6, 7, 13, 14, 20, 21, 27, 28]    
+    
+    #merging the list of holidays  
+    overall = A + weekend        
+    #finding the unique list after removing duplicates
+    overall_unique = list(set(overall))     
+    # number of elements in the final holiday list
+    print(len(overall_unique))      
+
+===========================================================
+
+Create a replica string
+
+
+t = int(input())
+for i in range(t):
+    S = str(input())
+    A = S
+    # Write the code below this line to generate String A
+    
+    B = S[::-1]
+    # Write the code below this line to generate String B
+    
+    print(A)
+    print(B)
+
+=====================================================
+Binary strings
+
+# Update the '_' in the code below to solve this problem
+
+t = int(input())
+for i in range(t):
+    A = input()
+    B = input()
+    
+    #variable to store the count of '1's in A and B and the count of indices where A[i] = B[i]
+    a_count = 0         
+    b_count = 0 
+    common = 0 
+    
+    # Count '1s' in A
+    for i in A:
+        if i == '1' :
+            a_count = a_count + 1
+
+    # Count '1s' in B
+    for i in B:
+        if i == '1' :
+            b_count = b_count + 1
+
+    # Count indices where A[j] = B[j]    
+    j = 0
+    n = len(A)
+    while j<n:
+        if A[j] == B[j]:
+            common = common + 1
+        j = j + 1
+    
+    print(a_count,b_count,common)
+
+===================================================
+Numerical characters in strings
+
+
+# Update the '_' in the code below to solve this problem
+
+t = int(input())
+for i in range(t):
+    #Treat A as a string instead of an integer
+    A = input()   
+    
+    flag = 0
+    
+    for i in A:
+        #If any '0' or '5' is found in the string A - then set flag as 1 and exit the loop
+        if i == '0' or i == '5' :
+            flag = 1
+            break       
+    
+    if flag == 1:
+        print('Yes')
+    else:
+        print('No')
+        
+==================================================
+Practice problem - Different Consecutive Chars
+
+
+# Update the code below to solve the problem
+
+t = int(input())
+for i in range(t):
+    N = int(input())
+    S = input()
+    ans =0
+    for i in range( N-1 ):
+        if( S[i] == S[i+1] ):
+            ans = ans +1
+            
+    print(ans)
+            
+    
+    
+
+
+==========================================
+
+
+Problem(Farm animals) - Solve sub-components
+
+X = 3
+Y = 4
+Z = 12
+if (Z%X == 0) and (Z%Y == 0):
+    print('Z is divisible by both X and Y')
+elif (Z%X == 0):
+    print('Z is divisible only by X')
+elif (Z%Y == 0):
+    print('Z is divisible only by Y')
+else:
+    print('Z is divisible by neither X nor Y')
+
+X = 3
+Y = 5
+Z = 13
+if (Z%X == 0) and (Z%Y == 0):
+    print('Z is divisible by both X and Y')
+elif (Z%X == 0):
+    print('Z is divisible only by X')
+elif (Z%Y == 0):
+    print('Z is divisible only by Y')
+else:
+    print('Z is divisible by neither X nor Y')
+ ============================================================   
+Problem(Farm animals) - Solve the complete problem
+
+# Update the program below to solve the problem
+
+t = int(input())            
+for i in range(t):          
+    X, Y, Z = map(int, input().split())
+    
+    if(Z%X == 0 and Z%Y ==0):
+        print("ANY")
+        
+    elif( Z%X ==0  ):
+        print("CHICKEN")
+    
+    elif(Z %Y ==0):
+        print("DUCK")
+    else:
+        print("NONE")
+        
+    
+
+
+
+==========================================
+
+Merging two sorted arrays
+   
+def merge_and_sort(arr1, arr2):
+    # Get the lengths of the arrays
+    n = len(arr1)
+    m = len(arr2)
+
+    # Initialize pointers for both arrays and the combined array
+    i = 0
+    j = 0
+    combined_array = []
+
+    # Merge the arrays using two pointers
+    while i < n and j < m:
+        if arr1[i] < arr2[j]:
+            combined_array.append(arr1[i])
+            i += 1
+        else:
+            combined_array.append(arr2[j])
+            j += 1
+
+    # Add remaining elements from arr1
+    while i < n:
+        combined_array.append(arr1[i])
+        i += 1
+
+    # Add remaining elements from arr2
+    while j < m:
+        combined_array.append(arr2[j])
+        j += 1
+
+    return combined_array
+
+# Input sizes and arrays
+size1 = int(input())
+arr1 = list(map(int, input().split()))
+
+size2 = int(input())
+arr2 = list(map(int, input().split()))
+# Call the function and print the result
+result = merge_and_sort(arr1, arr2)
+print(*result)
+
+
+
+
+=================================================
+
+Merge Sort Algorithm
+
+def Merge(a, size_a, b, size_b, c):
+    idx1 = 0
+    idx2 = 0
+    idx = 0
+    while idx1 < size_a and idx2 < size_b:
+        if a[idx1] < b[idx2]:
+            c[idx] = a[idx1]
+            idx1 += 1
+        else:
+            c[idx] = b[idx2]
+            idx2 += 1
+        idx += 1
+
+    while idx1 < size_a:
+        c[idx] = a[idx1]
+        idx1 += 1
+        idx += 1
+
+    while idx2 < size_b:
+        c[idx] = b[idx2]
+        idx2 += 1
+        idx += 1
+
+def Sort(a, size_a):
+    if size_a <= 1:
+        return
+
+    mid = size_a//2
+
+    sz1 = mid
+    sz2 = size_a - mid
+
+    a1 = [0] * sz1
+    a2 = [0] * sz2
+
+    for i in range(mid):
+        a1[i] = a[i]
+
+    for i in range(mid ,size_a ):
+        a2[i-mid] = a[i]
+
+    Sort(a1, sz1)
+    Sort(a2, sz2)
+
+    Merge(a1, sz1, a2, sz2 , a )
+
+if __name__ == "__main__":
+    n = int(input())
+    a = list(map(int , input().split()))
+
+    Sort(a, n)
+
+    for i in range(n):
+        print(a[i], end=" ")
+    print()
+
+
+
+
+
+==================================================
+
+INVERSION COUNT 
+
+# cook your dish here
+MOD = 10**9 + 7
+
+def merge(a, size_a, b, size_b, c):
+    idx1, idx2, idx = 0, 0, 0
+
+    while idx1 < size_a and idx2 < size_b:
+        if a[idx1] < b[idx2]:
+            c[idx] = a[idx1]
+            idx1 += 1
+        else:
+            c[idx] = b[idx2]
+            idx2 += 1
+        idx += 1
+
+    while idx1 < size_a:
+        c[idx] = a[idx1]
+        idx1 += 1
+        idx += 1
+
+    while idx2 < size_b:
+        c[idx] = b[idx2]
+        idx2 += 1
+        idx += 1
+
+def count_inversions(a, size_a, b, size_b):
+    ptr = size_b - 1
+    ans = 0
+    for i in range(size_a):
+        while ptr >= 0 and b[ptr] < a[i]:
+            ptr -= 1
+        ans = (ans + (size_b - 1 - ptr)) % MOD
+    return ans
+
+def sort_and_count(a, size_a):
+    if size_a < 2:
+        return 0
+
+    mid = size_a // 2
+
+    a1 = a[:mid]
+    a2 = a[mid:]
+
+    sz1 = len(a1)
+    sz2 = len(a2)
+
+
+    left = sort_and_count(a1, sz1)
+    right = sort_and_count(a2, sz2)
+
+    num = count_inversions(a1, sz1, a2, sz2)
+
+
+    merged = [0] * size_a
+    merge(a1, sz1, a2, sz2, merged)
+
+    for i in range(size_a):
+        a[i] = merged[i]
+
+    return ((left + right) % MOD + num) % MOD
+
+
+t = int(input())
+
+for _ in range(t):
+    n = int(input())
+    a = list(map(int, input().split()))
+
+    print(sort_and_count(a, n))
+
+
+
+
+=================================================
+
+PARTITIONING THE ARRAY
+
+# Replace '_' to solve the problem
+def partition(a, size_a):
+    pivot = a[size_a-1]
+    idx = 0
+
+    for i in range(size_a):
+        if a[i] <= pivot:
+            a[idx], a[i] = a[i], a[idx]
+            idx += 1
+
+    a[idx], a[size_a - 1] = a[size_a - 1], a[idx]
+
+
+if __name__ == "__main__":
+    n = int(input())
+
+    a = list(map(int, input().split()))
+
+    partition(a, n)
+
+    for i in range(n):
+        print(a[i], end=" ")
+
+    print()
+
+
+
+
+=======================================================
+
+
+IMPLEMENTING QUICK SORT
+
+def partition(a, l, r):
+    """
+    Partition the array into two parts and return the index of the pivot element.
+    Args:
+    - a: The array to be partitioned
+    - l: The leftmost index of the subarray
+    - r: The rightmost index of the subarray
+    Returns:
+    - The index of the pivot element
+    """
+    pivot = a[r]
+    idx = l
+
+    for i in range(l, r):
+        if a[i] <= pivot:
+            a[idx], a[i] = a[i], a[idx]
+            idx += 1
+
+    a[idx], a[r] = a[r], a[idx]
+
+    # Return the final pivot index
+    return idx
+
+
+def sort(a, l, r):
+    """
+    Recursive function to sort the array using quicksort.
+    Args:
+    - a: The array to be sorted
+    - l: The leftmost index of the subarray
+    - r: The rightmost index of the subarray
+    """
+    if r - l < 1:
+        return  # Arrays of size 1 and 0 are already sorted
+
+    pivot = partition(a, l, r)
+
+    # Sorting both halves of the array
+    sort(a, l, pivot - 1)
+    sort(a, pivot + 1, r)
+
+
+if __name__ == "__main__":
+    n = int(input())
+
+    a = list(map(int, input().split()))
+
+    sort(a, 0, n - 1)
+
+    for i in range(n):
+        print(a[i], end=" ")
+
+    print()
+
+
+
+
+==================================================
+
+
+Randomised Quick Sort
+
+import random
+
+def partition(a, l, r):
+    """
+    Partition the array into two parts and return the index of the pivot element.
+    Args:
+    - a: The array to be partitioned
+    - l: The leftmost index of the subarray
+    - r: The rightmost index of the subarray
+    Returns:
+    - The index of the pivot element
+    """
+    pivot = a[r]
+    idx = l
+
+    for i in range(l, r):
+        if a[i] <= pivot:
+            a[idx], a[i] = a[i], a[idx]
+            idx += 1
+
+    a[idx], a[r] = a[r], a[idx]
+
+    # Return the final pivot index
+    return idx
+
+def random_part(a, l, r):
+    """
+    Swap a random element with the last element in the subarray.
+    Args:
+    - a: The array
+    - l: The leftmost index of the subarray
+    - r: The rightmost index of the subarray
+    """
+    rand_idx = random.randint(l, r)
+    a[rand_idx], a[r] = a[r], a[rand_idx]
+
+def sort(a, l, r):
+    """
+    Recursive function to sort the array using quicksort.
+    Args:
+    - a: The array to be sorted
+    - l: The leftmost index of the subarray
+    - r: The rightmost index of the subarray
+    """
+    if r - l < 1:
+        return  # Arrays of size 1 and 0 are already sorted
+
+    random_part(a, l, r)
+    pivot = partition(a, l, r)
+
+    # Sorting both halves of the array
+    sort(a, l, pivot - 1)
+    sort(a, pivot + 1, r)
+
+if __name__ == "__main__":
+    n = int(input())
+
+    a = list(map(int, input().split()))
+
+    sort(a, 0, n - 1)
+
+    for i in range(n):
+        print(a[i], end=" ")
+
+    print()
+
+
+
+
+
+=================================
+
+Sequential Search
+
+def search(arr, x, n):
+    # Write your code here
+    for i in range(n):
+        if arr[i] == x:
+            return i+1
+    
+    return -1
+
+if __name__ == "__main__":
+    t = int(input())
+
+    for _ in range(t):
+        n, x = map(int, input().split())
+        arr = list(map(int, input().split()))
+
+        result = search(arr, x, n)
+        print(result)
+
+
+
+
+
+
+
+======================================
+
+
+Binary Search
+
+# Replace '_' to solve the problem
+def binary_search(arr, target):
+    left = 0
+    right = len(arr)-1
+
+    while right >= left:
+        mid = (left + right) // 2
+        if arr[mid] == target:
+            return mid + 1
+        elif arr[mid] > target:
+            right = mid-1
+        else:
+            left = mid+1
+
+    return -1
+
+if __name__ == "__main__":
+    t = int(input())
+    
+    while t > 0:
+        n, x = map(int, input().split())
+        arr = list(map(int, input().split()))
+
+        result = binary_search(arr, x)
+        print(result)
+
+        t -= 1
+
+
+
+
+
+
+
+
+================================================
+
+Average Flex
+# cook your dish here
+
+
+def upperbound(a , key):
+    left =0
+    right = len(a)
+    
+    while( right > left ):
+        
+        mid = (right+left)//2
+        
+        if( a[mid] <= key ):
+            
+            left = mid +1
+            
+        else :
+            right = mid
+            
+            
+    return left
+            
+t = int(input())
+
+for _ in range(t):
+    n = int(input())
+    a = list( map( int , input().split()))
+    a.sort()
+    count =0
+    for i in range(n):
+        index = upperbound(a,a[i])
+        if( index > n-index  ):
+            count = count+1
+            
+    print(count)
+
+
+
+
+
+===============================================
+
+
+Divide and Conquer Multiplication
+
+
+# Input the number of test cases
+t = int(input())
+
+# Process each test case
+for _ in range(t):
+    # Input numbers as strings
+    num1 = int(input())
+    num2 = int(input())
+
+    result = num1*num2
+
+    print(result)
+
+
+
+
+
+
+
+
+===================================================
+
+Optimised Divide and conquer
+
+import java.util.Scanner;
+
+public class Main {
+    // Pad the numbers with 0 to make their sizes equal
+    static void makeEqualSize(StringBuilder A, StringBuilder B) {
+        while (A.length() < B.length()) {
+            A.insert(0, '0');
+        }
+        while (B.length() < A.length()) {
+            B.insert(0, '0');
+        }
+    }
+
+    // Digit subtraction of the numbers
+    static String subtract(String A, String B) {
+        StringBuilder C, D;
+        C = new StringBuilder(A);
+        D = new StringBuilder(B);
+        makeEqualSize(C, D);
+        A = C.toString();
+        B = D.toString();
+
+        boolean sign = false;
+        if (A.compareTo(B) < 0) {
+            sign = true;
+            String temp = A;
+            A = B;
+            B = temp;
+        }
+        int borrow = 0;
+        StringBuilder res = new StringBuilder();
+        for (int i = A.length() - 1; i >= 0; i--) {
+            int dA = (A.charAt(i) - '0') - borrow;
+            int dB = (B.charAt(i) - '0');
+
+            if (dA < dB) {
+                dA += 10;
+                borrow = 1;
+            } else {
+                borrow = 0;
+            }
+
+            int digit = (dA - dB) % 10;
+            char d = (char) (digit + '0');
+            res.insert(0, d);
+        }
+        if (sign) {
+            res.insert(0, '-');
+        }
+        return res.toString();
+    }
+
+    // Digit addition of the numbers
+    static String add(String A, String B) {
+        if (A.length() > 0 && A.charAt(0) == '-') {
+            return subtract(B, A);
+        }
+        if (B.length() > 0 && B.charAt(0) == '-') {
+            return subtract(A, B);
+        }
+
+        StringBuilder C, D;
+        C = new StringBuilder(A);
+        D = new StringBuilder(B);
+        makeEqualSize(C, D);
+        A = C.toString();
+        B = D.toString();
+
+        int carry = 0;
+        StringBuilder res = new StringBuilder();
+        for (int i = A.length() - 1; i >= 0; i--) {
+            int sum = (A.charAt(i) - '0') + (B.charAt(i) - '0') + carry;
+            int digit = sum % 10;
+            carry = sum / 10;
+            char d = (char) (digit + '0');
+            res.insert(0, d);
+        }
+        if (carry != 0) {
+            char d = (char) (carry + '0');
+            res.insert(0, d);
+        }
+        return res.toString();
+    }
+
+    // Remove extra leading zeroes
+    static String removeLeadingZeros(String S) {
+        boolean f = true;
+        StringBuilder res = new StringBuilder();
+        for (char c : S.toCharArray()) {
+            if (f && c == '0') {
+                continue;
+            }
+            f = false;
+            res.append(c);
+        }
+        return res.toString();
+    }
+
+    // Multiply the number with powers of 10
+    static String multiplyTenPower(String S, int power) {
+        S = removeLeadingZeros(S);
+        StringBuilder result = new StringBuilder(S);
+        while (power-- > 0) {
+            result.append('0');
+        }
+        return result.toString();
+    }
+
+    // Function to multiply the numbers
+    static String multiply(String A, String B) {
+        if (A.length() < B.length()) {
+            String temp = A;
+            A = B;
+            B = temp;
+        }
+
+        StringBuilder C, D;
+        C = new StringBuilder(A);
+        D = new StringBuilder(B);
+        makeEqualSize(C, D);
+        A = C.toString();
+        B = D.toString();
+
+
+        int N = A.length();
+
+        if (N == 1) { // Base case
+            int res = (A.charAt(0) - '0') * (B.charAt(0) - '0');
+            return Integer.toString(res);
+        }
+
+        // Pad one extra 0 to make the length even
+        if ((N & 1) == 1) {
+            N++;
+            A = "0" + A;
+            B = "0" + B;
+        }
+
+        int firstHalfSize = N - N / 2;
+        int secondHalfSize = N / 2;
+
+        // Distribute into two halves
+        StringBuilder a1 = new StringBuilder();
+        StringBuilder a2 = new StringBuilder();
+        StringBuilder b1 = new StringBuilder();
+        StringBuilder b2 = new StringBuilder();
+
+        for (int i = 0; i < firstHalfSize; i++) {
+            a1.append(A.charAt(i));
+            b1.append(B.charAt(i));
+        }
+
+        for (int i = firstHalfSize; i < N; i++) {
+            a2.append(A.charAt(i));
+            b2.append(B.charAt(i));
+        }
+
+        String A1 = a1.toString();
+        String B1 = b1.toString();
+        String A2 = a2.toString();
+        String B2 = b2.toString();
+
+        // Take all the smaller multiplications
+        String W = multiply(A1, B1);
+        String X = multiply(A2, B2);
+        String Y = multiply(add(A1, A2), add(B1, B2));
+
+        // Store the answer
+        String ans = add(add(multiplyTenPower(W, N), multiplyTenPower(subtract(Y, add(W, X)), N / 2)), X);
+
+        // // Return the answer with no leading zeros
+        return removeLeadingZeros(ans);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int t = scanner.nextInt();
+        scanner.nextLine();
+        while (t-- > 0) {
+            String num1 = scanner.nextLine();
+            String num2 = scanner.nextLine();
+
+            System.out.println(multiply(num1, num2));
+        }
+    }
+}
+
+
+
+
+
+================================================
+
+
+Chef and String
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+
+class Codechef
+{
+	public static void main (String[] args) throws java.lang.Exception
+	{
+		// your code goes here
+		Scanner sc = new Scanner(System.in);
+		int t = sc.nextInt();
+	
+		for(int i =0 ; i< t ; i++)
+		{
+		    String s = sc.next();
+		    
+		    System.out.println(maxfun(s));
+		    
+		    
+		}
+		
+
+
+	}
+	
+	
+	public static int maxfun(String s)
+	{
+	    
+	    int n = s.length();
+	    
+	    int count =0;
+	    
+	    for(int i =0 ; i< n-1 ; i++)
+	    {
+	        char curr = s.charAt(i);
+	        char next = s.charAt(i+1);
+	        if( (curr == 'x' && next == 'y') || (curr == 'y' && next == 'x')  )
+	        {
+	            count++;
+	            i++;
+	        }
+	        
+	        
+	    }
+	    
+	    return count;
+	    
+
+	}
+	
+}
+
+==================================================
+Job Scheduling Problem
+
+import java.util.*;
+import java.lang.*;
+
+class Job {
+    int id;
+    int t;
+    int d;
+    int late;
+
+    public Job(int id, int t, int d) {
+        this.id = id;
+        this.t = t;
+        this.d = d;
+        this.late = 0;
+    }
+}
+
+class Codechef {
+    public static void main(String[] args) throws java.lang.Exception {
+        Scanner sc = new Scanner(System.in);
+        int t = sc.nextInt();
+
+        Job[] joblist = new Job[t];
+
+        for (int i = 0; i < t; i++) {
+            int time = sc.nextInt();
+            int dead = sc.nextInt();
+            joblist[i] = new Job(i + 1, time, dead);
+        }
+
+        maxfun(joblist);
+    }
+
+    public static void maxfun(Job[] joblist) {
+        PriorityQueue<Job> pq = new PriorityQueue<>(
+            (a, b) -> Integer.compare(a.d, b.d)
+        );
+
+        pq.addAll(Arrays.asList(joblist));
+
+        ArrayList<Integer> order = new ArrayList<>();
+        int currtime = 0;
+        
+        int maxlate = 0;
+
+        while (!pq.isEmpty()) {
+            Job curr = pq.poll();
+            currtime += curr.t;  // Adding the job's time to the current time
+
+            order.add(curr.id);
+
+            int late = Math.max(0, currtime - curr.d);
+            
+            maxlate = Math.max(late,maxlate);
+
+
+        }
+
+        System.out.println(maxlate);
+
+        for (int i = 0; i < order.size(); i++) {
+            System.out.print(order.get(i) + " ");
+        }
+    }
+}
+
+
+
+====================================================
+Implementation of Prims 
+
+N = 10
+vis = [False] * N
+adj = [[] for _ in range(N)]
+MST = []
+
+class Pair:
+    def __init__(self, first, second):
+        self.first = first
+        self.second = second
+
+def prims(source, n):
+    global MST, vis
+
+    # Stores weight, newly added vertex, and parent vertex
+    pq = []
+
+    def push_to_pq(item):
+        pq.append(item)
+        pq.sort()
+
+    push_to_pq((0, source))  # push the starting vertex to the pq
+
+    while pq:
+        node = pq.pop(0)
+
+        v = node[1]
+
+        # If vertex is already processed, continue
+        if vis[v]:
+            continue
+
+        vis[v] = True  # Mark vertex as processed
+
+        print(f"Adding vertex {v} to the MST")
+
+        if len(node) == 3:
+            MST.append(Pair(node[2], v))  # Push the edge into the MST
+
+        for edge in adj[v]:
+            push_to_pq((edge.second, edge.first, v))
+
+    print("\nEdgelist of MST is:")
+
+    for edge in MST:
+        print(edge.first, edge.second)
+
+if __name__ == "__main__":
+    for i in range(N):
+        vis.append(False)
+        adj.append([])
+
+    # Adjacency list
+    adj[1].append(Pair(2, 4))
+    adj[2].append(Pair(1, 4))
+
+    adj[1].append(Pair(3, 4))
+    adj[3].append(Pair(1, 4))
+
+    adj[2].append(Pair(3, 2))
+    adj[3].append(Pair(2, 2))
+
+    adj[3].append(Pair(4, 3))
+    adj[4].append(Pair(3, 3))
+
+    adj[3].append(Pair(5, 2))
+    adj[5].append(Pair(3, 2))
+
+    adj[3].append(Pair(6, 4))
+    adj[6].append(Pair(3, 4))
+
+    adj[4].append(Pair(6, 3))
+    adj[6].append(Pair(4, 3))
+
+    adj[5].append(Pair(6, 3))
+    adj[6].append(Pair(5, 3))
+
+    prims(1, 6)
+
+
+
+
+
+==========================================================
+
+
+
+Calculate MST Weight
+
+import java.util.*;
+
+class main {
+
+    static final int N = 200010;
+    static ArrayList<Boolean> vis = new ArrayList<>(N);
+    static ArrayList<ArrayList<Pair>> adj = new ArrayList<>(N);
+
+    static ArrayList<Pair> MST = new ArrayList<>(); // Stores the edge list of the Minimum Spanning Tree
+
+    static class Pair {
+        int first, second;
+
+        Pair(int first, int second) {
+            this.first = first;
+            this.second = second;
+        }
+    }
+
+    static void prims(int source, int n) { // Source is the starting vertex
+        long ans = 0;
+        // Write your solution here
+        
+        PriorityQueue<int[]> pq = new PriorityQueue<>( (a,b) -> Integer.compare(a[0],b[0]) );
+        
+        pq.add( new int[]{0,source} );
+        
+ 
+        
+        while( pq.size() != 0 )
+        {
+            
+            int[] node = pq.poll();
+            
+            int v = node[1];
+            
+            if( vis.get(v) )
+            {
+                continue;
+            }
+            
+            vis.set(v, true);
+            
+            if(node.length ==3)
+            {
+                ans = ans + node[0];
+            }
+            
+            for(Pair edge : adj.get(v) )
+            {
+                pq.add(new int[] { edge.second, edge.first , v  }  );
+            }
+            
+            
+            
+        }
+        
+        
+        
+        
+
+
+        System.out.println(ans);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        for (int i = 0; i < N; i++) {
+            vis.add(false);
+            adj.add(new ArrayList<>());
+        }
+
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+
+        for (int i = 0; i <= n; i++) {
+            adj.set(i, new ArrayList<>());
+        }
+
+        for (int i = 0; i < m; i++) {
+            int x = scanner.nextInt();
+            int y = scanner.nextInt();
+            int w = scanner.nextInt();
+            adj.get(x).add(new Pair(y, w));
+            adj.get(y).add(new Pair(x, w));
+        }
+
+        prims(1, n);
+    }
+}
+
+
+
+
+
+
+
+=================================================
+
+
+Road Decoration
+
+
+# cook your dish here
+import heapq
+
+class UnionFind:
+    def __init__(self, size):
+        self.parent = [i for i in range(size)]
+
+    def find(self, u):
+        if u != self.parent[u]:
+            self.parent[u] = self.find(self.parent[u])
+        return self.parent[u]
+
+    def union(self, u, v):
+        u = self.find(u)
+        v = self.find(v)
+        if u != v:
+            self.parent[u] = v
+
+def main():
+    t = int(input())
+    for _ in range(t):
+        graph = {}
+        edgeList = []
+        n, m = map(int, input().split())
+        for i in range(n):
+            graph[i] = []
+        for _ in range(m):
+            u, v, w = map(int, input().split())
+            graph[u].append((v, w))
+            graph[v].append((u, w))
+            edgeList.append((u, v, w))
+        edgeList.sort(key=lambda x: x[2])
+
+        uf = UnionFind(n)
+        mst = 0
+        cnt = 0
+
+        for edge in edgeList:
+            u, v, w = edge
+            if uf.find(u) == uf.find(v):
+                continue
+            else:
+                uf.union(u, v)
+                mst += w
+                cnt += 1
+
+        if cnt != n - 1:
+            print("NO")
+            continue
+
+        dist = [float('inf')] * n
+        edgeChosen = [0] * n
+        dist[0] = 0
+        pq = [(0, 0)]
+
+        while pq:
+            d, u = heapq.heappop(pq)
+            if dist[u] < d:
+                continue
+            for v, w in graph[u]:
+                if dist[v] > w + d:
+                    dist[v] = w + d
+                    heapq.heappush(pq, (w + d, v))
+                    edgeChosen[v] = w
+                elif dist[v] == w + d and w < edgeChosen[v]:
+                    edgeChosen[v] = w
+
+        mdt = sum(edgeChosen)
+        if mdt == mst:
+            print("YES")
+        else:
+            print("NO")
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+==================================================
+
+
+Implementing Huffman Algorithm
+
+
+import heapq
+from collections import defaultdict
+
+class Node:
+    def __init__(self, data, frequency):
+        self.data = data
+        self.frequency = frequency
+        self.left = None
+        self.right = None
+
+    # Define comparison operators for nodes
+    def __lt__(self, other):
+        return self.frequency < other.frequency
+
+def build(s):
+    frequency_map = defaultdict(int)
+    for char in s:
+        frequency_map[char] += 1
+
+    min_heap = [Node(char, frequency) for char, frequency in frequency_map.items()]
+    heapq.heapify(min_heap)
+
+    while len(min_heap) > 1:
+        node1 = heapq.heappop(min_heap)
+        node2 = heapq.heappop(min_heap)
+
+        internal_node = Node('$', node1.frequency + node2.frequency)
+        internal_node.left = node1
+        internal_node.right = node2
+
+        heapq.heappush(min_heap, internal_node)
+
+    return min_heap[0]
+
+def generate_codes(root, code, codes):
+    if root:
+        if root.data != '$':
+            codes[root.data] = code
+        generate_codes(root.left, code + '0', codes)
+        generate_codes(root.right, code + '1', codes)
+
+def dictionary(root):
+    codes = {}
+    generate_codes(root, '', codes)
+
+
+def encode(s):
+    codes = {}
+    generate_codes(build(s), '', codes)
+
+    encoded = ''.join(codes[char] for char in s)
+    return encoded
+
+def decode(encoded, root):
+    current = root
+    decoded = ""
+
+    for bit in encoded:
+        if bit == '0':
+            current = current.left
+        else:
+            current = current.right
+
+        if current.left is None and current.right is None:
+            decoded += current.data
+            current = root
+
+    return decoded
+
+if __name__ == "__main__":
+    s = "Hello! This message will be encoded"
+
+    root = build(s)
+    dictionary(root)
+
+    encoded = encode(s)
+    # print("The encoded string is:", encoded)
+    decoded = decode(encoded, root)
+    print("The decoded string is:", decoded)
+
+
+
+
+=====================================================
+
+
+Fractional Knapsack Problem
+
+def main():
+    import sys
+    input = sys.stdin.read
+    data = input().split()
+
+    n = int(data[0])
+    wmax = float(data[1])
+
+    items = []
+    index = 2
+    for _ in range(n):
+        w = float(data[index])
+        v = float(data[index + 1])
+        value_per_weight = v / w  
+        items.append((value_per_weight, w))
+        index += 2
+
+    items.sort(reverse=True, key=lambda x: x[0])
+
+    ans = 0
+    for value_per_weight, weight in items:
+        if wmax <= 0:
+            break
+        weight_to_take = min(wmax, weight)
+        ans += weight_to_take * value_per_weight
+        wmax -= weight_to_take
+
+    print(f"{ans:.16f}")
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+===========================================================
+
+Knapsack Problem
+
+
+def knapsack(N, W_max, weights, values):
+    dp = [[0] * (W_max + 1) for _ in range(N + 1)]
+
+    for i in range(1, N + 1):
+        for w in range(W_max + 1):
+            dp[i][w] = dp[i-1][w]  
+            if w >= weights[i-1]:
+                dp[i][w] = max(dp[i][w], dp[i-1][w - weights[i-1]] + values[i-1])
+
+    return dp[N][W_max]
+
+def main():
+    import sys
+    input = sys.stdin.read
+    data = input().split()
+
+    N = int(data[0])
+    W_max = int(data[1])
+
+    weights = []
+    values = []
+
+    index = 2
+    for _ in range(N):
+        weights.append(int(data[index]))
+        values.append(int(data[index + 1]))
+        index += 2
+
+    print(knapsack(N, W_max, weights, values))
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+======================================================
+
+
+Subset Sum Problem
+
+
+def can_form_subset(A, X):
+    # DP array to store if a sum j is possible
+    dp = [False] * (X + 1)
+    dp[0] = True  # Base case: sum of 0 is always possible
+
+    # Process each element in the array
+    for num in A:
+        # Update the DP table in reverse to prevent overwriting
+        for j in range(X, num - 1, -1):
+            if dp[j - num]:
+                dp[j] = True
+
+    # Result is whether we can form the sum X
+    return dp[X]
+
+def main():
+    import sys
+    input = sys.stdin.read
+    data = input().split()
+    
+    N = int(data[0])
+    X = int(data[1])
+    A = list(map(int, data[2:2+N]))
+
+    if can_form_subset(A, X):
+        print("YES")
+    else:
+        print("NO")
+
+if __name__ == "__main__":
+    main()
+
+
+
+
+
+===================================================
+
+
+Longest Common Subsequence
+
+
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        // Write your code here
+        Scanner sc = new Scanner(System.in);
+        
+        String a = sc.next();
+        String b = sc.next();
+        
+        int m = a.length();
+        int n = b.length();
+        
+        int [][] dp = new int[m+1][n+1];
+        
+        for(int i =0 ; i< m+1; i++ )
+        {
+            for(int j =0 ; j< n+1 ; j++ )
+            {
+                dp[i][j] = -1;
+            }
+        }
+        
+        System.out.println( LCS(a,b,m,n,dp) );
+
+    }
+    
+    public static int LCS( String a , String b , int m , int n , int[][] dp )
+    {
+        
+        
+        
+        if( m == 0 || n == 0 )
+        {
+            return 0;
+        }
+        
+        
+        if( dp[m][n] != -1 )
+        {
+            return dp[m][n];
+        }
+        
+        if( a.charAt(m-1) == b.charAt(n-1) )
+        {
+            dp[m][n] = 1+ LCS(a,b,m-1,n-1,dp);
+            return dp[m][n];
+        }
+        
+        dp[m][n] = Math.max( LCS(a,b,m,n-1,dp) , LCS(a,b,m-1,n,dp)  );
+        
+        return dp[m][n];
+        
+    }
+}
+
+
+
+=======================================================
+
+
+
+
+Longest Palindromic Subsequence
+
+
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Reading input
+        String S = scanner.nextLine();
+        int n = S.length();
+        
+        // Call the function to find the length of the longest palindromic subsequence
+        int result = longestPalindromicSubsequence(S, n);
+        
+        // Output the result
+        System.out.println(result);
+        
+        scanner.close();
+    }
+    
+    public static int longestPalindromicSubsequence(String S, int n) {
+        // Create a 2D DP array
+        int[][] dp = new int[n][n];
+        
+        // Every single character is a palindrome of length 1
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = 1;
+        }
+        
+        // Fill the DP table
+        for (int length = 2; length <= n; length++) {
+            for (int i = 0; i < n - length + 1; i++) {
+                int j = i + length - 1;
+                
+                if (S.charAt(i) == S.charAt(j)) {
+                    dp[i][j] = dp[i + 1][j - 1] + 2;
+                } else {
+                    dp[i][j] = Math.max(dp[i + 1][j], dp[i][j - 1]);
+                }
+            }
+        }
+        
+        // Result is the length of the longest palindromic subsequence in the entire string
+        return dp[0][n - 1];
+    }
+}
+
+
+
+
+
+
+=============================================================
+
+All to All Shortest Path
+
+
+
+def floyd_warshall(N, edges):
+    INF = float('inf')
+    
+    dist = [[INF] * N for _ in range(N)]
+
+    for u, v, w in edges:
+        dist[u][v] = min(dist[u][v], w)
+        dist[v][u] = min(dist[v][u], w)
+    
+
+    for k in range(N):
+        for i in range(N):
+            for j in range(N):
+                if dist[i][k] < INF and dist[k][j] < INF:
+                    dist[i][j] = min(dist[i][j], dist[i][k] + dist[k][j])
+    
+    result = []
+    for i in range(N):
+        row = []
+        for j in range(N):
+            if i == j:
+                m = min(dist[i])
+                if m == INF:
+                    row.append('-1')
+                else:
+                    row.append(str(m * 2))
+            else:
+                if dist[i][j] == INF:
+                    row.append('-1')
+                else:
+                    row.append(str(dist[i][j]))
+        result.append(' '.join(row))
+    
+    return result
+
+import sys
+input = sys.stdin.read
+data = input().split()
+
+index = 0
+N = int(data[index])
+index += 1
+M = int(data[index])
+index += 1
+
+edges = []
+for _ in range(M):
+    u = int(data[index]) - 1
+    index += 1
+    v = int(data[index]) - 1
+    index += 1
+    w = int(data[index])
+    index += 1
+    edges.append((u, v, w))
+
+results = floyd_warshall(N, edges)
+for line in results:
+    print(line)
+
+
+
+
+
+========================================================
+
+
+Optimal Binary Search trees Input Format
+
+
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int N = sc.nextInt();
+        int[] F = new int[N];
+        for (int i = 0; i < N; i++) {
+            F[i] = sc.nextInt();
+        }
+
+        System.out.println(optimalBST(F, N));
+    }
+
+    public static int optimalBST(int[] F, int N) {
+        int[][] cost = new int[N][N];
+        int[] freqSum = new int[N];
+
+        for (int i = 0; i < N; i++) {
+            freqSum[i] = F[i] + (i > 0 ? freqSum[i - 1] : 0);
+        }
+
+        for (int i = 0; i < N; i++) {
+            cost[i][i] = F[i];
+        }
+
+       
+        for (int len = 2; len <= N; len++) {
+            for (int i = 0; i <= N - len; i++) {
+                int j = i + len - 1;
+                cost[i][j] = Integer.MAX_VALUE;
+
+                for (int r = i; r <= j; r++) {
+                    int leftCost = (r > i) ? cost[i][r - 1] : 0;
+                    int rightCost = (r < j) ? cost[r + 1][j] : 0;
+                    int totalCost = leftCost + rightCost + sumFrequencies(freqSum, i, j);
+
+                    cost[i][j] = Math.min(cost[i][j], totalCost);
+                }
+            }
+        }
+
+        return cost[0][N - 1];
+    }
+
+    public static int sumFrequencies(int[] freqSum, int i, int j) {
+        return freqSum[j] - (i > 0 ? freqSum[i - 1] : 0);
+    }
+}
+
+
+
+
+=============================================================
+
+
+N Queens - Backtracking
+
+
+
+import java.util.Arrays;
+
+class main {
+
+    // Directions to check if queens attack another
+    static int[] dx = {0, 0, -1, -1, -1, 1, 1, 1};
+    static int[] dy = {-1, 1, 0, -1, 1, 0, -1, 1};
+
+    static boolean check(char[][] board, int n, int row, int col) {
+        for (int k = 0; k < 8; k++) {
+            int x = row, y = col;
+            while (x >= 0 && x < n && y >= 0 && y < n) {
+                if (board[x][y] == 'Q') {
+                    return false; // Queen attacks another
+                }
+                x += dx[k];
+                y += dy[k];
+            }
+        }
+        return true; // Can place queen here
+    }
+
+    static void backtrack(int row, int n, char[][] board) {
+        if (row == n) { // No more rows to fill
+            for (char[] x : board) { // Print the solution
+                System.out.println(new String(x));
+            }
+            System.out.println();
+            return;
+        }
+        for (int col = 0; col < n; col++) {
+            if (check(board, n, row, col)) {
+                board[row][col] = 'Q'; // Add the queen
+                backtrack(row + 1, n, board);
+                board[row][col] = '.'; // Remove the queen
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int n = 5;
+        char[][] board = new char[n][n]; // Initialise an empty board
+        for (char[] row : board) {
+            Arrays.fill(row, '.');
+        }
+        backtrack(0, n, board);
+    }
+}
+
+
+
+
+
+
+
+========================================================
+
+
+
+N Queens
+
+
+def is_safe(board, row, col, n):
+    # Check if there is a queen in the same column
+    for i in range(row):
+        if board[i][col] == 'Q':
+            return False
+
+    # Check if there is a queen in the left diagonal
+    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
+        if board[i][j] == 'Q':
+            return False
+
+    # Check if there is a queen in the right diagonal
+    for i, j in zip(range(row, -1, -1), range(col, n)):
+        if board[i][j] == 'Q':
+            return False
+
+    return True
+
+def solve_n_queens_util(board, row, n, result):
+    if row == n:
+        result.append([''.join(row) for row in board])
+        return
+
+    for col in range(n):
+        if is_safe(board, row, col, n):
+            board[row][col] = 'Q'
+            solve_n_queens_util(board, row + 1, n, result)
+            board[row][col] = '.'  # Backtrack
+
+def solve_n_queens(n):
+    board = [['.' for _ in range(n)] for _ in range(n)]
+    result = []
+    solve_n_queens_util(board, 0, n, result)
+    return result
+
+if __name__ == "__main__":
+    n = int(input())
+    solutions = solve_n_queens(n)
+    solutions.reverse()
+    for solution in solutions:
+        print("\n".join(solution))
+        print()
+
+
+
+
+
+
+
+======================================================================
+
+Satisfying the Constraints
+
+
+
+import java.util.*;
+
+class main {
+
+    // Check if 'next' vertex can be added after vertex 'v'
+    static boolean check(int v, int next, ArrayList<Integer> circuit, boolean[][] mat) {
+        // Write your code here
+        
+        if( !mat[v][next ] || circuit.indexOf(next)!=-1 )
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    static void backtrack(int v, int n, ArrayList<Integer> circuit, ArrayList<ArrayList<Integer>> ans, boolean[][] mat) {
+        if (circuit.size() == n) { // Circuit is completed
+            if (mat[circuit.get(0)][v]) { // Check if cycle is completed, starting should be adjacent to ending
+                circuit.add(circuit.get(0));
+                ans.add(new ArrayList<>(circuit));
+                circuit.remove(circuit.size() - 1);
+            }
+            return;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            // Calling the check function
+            if (!check(v, i, circuit, mat))
+                continue;
+
+            // If not visit and is adjacent, add it to our candidate solution
+            circuit.add(i);
+            backtrack(i, n, circuit, ans, mat);
+            circuit.remove(circuit.size() - 1);
+        }
+    }
+
+    // Number of vertices and adjacency matrix
+    static ArrayList<ArrayList<Integer>> hamiltonianCircuit(int n, boolean[][] mat) {
+        ArrayList<Integer> circuit = new ArrayList<>(); // Initially empty circuit
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>(); // To store all the circuits
+
+        for (int i = 1; i <= n; i++) { // Fix the starting vertex
+            circuit.add(i); // Add i to circuit
+            backtrack(i, n, circuit, ans, mat);
+            circuit.remove(circuit.size() - 1); // Remove i from circuit
+        }
+
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+
+        // Adjacency matrix
+        boolean[][] mat = new boolean[n + 1][n + 1];
+        while (m-- > 0) {
+            int a = scanner.nextInt();
+            int b = scanner.nextInt();
+            mat[a][b] = true;
+            mat[b][a] = true;
+        }
+        ArrayList<ArrayList<Integer>> cycles = hamiltonianCircuit(n, mat);
+        cycles.sort((x, y) -> {
+            return x.toString().compareTo(y.toString());
+        });
+
+        for (ArrayList<Integer> x : cycles) {
+            for (int y : x) {
+                System.out.print(y + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+
+
+
+
+
+
+===============================================================
+
+
+Hamiltonian Circuit
+
+
+
+def check(v, next_v, circuit, mat):
+    # Check if 'next' vertex can be added after vertex 'v'
+    if not mat[v][next_v] or next_v in circuit:
+        return False
+    return True
+
+def backtrack(v, n, circuit, ans, mat):
+    if len(circuit) == n:  # Circuit is completed
+        if mat[circuit[0]][v]:  # Check if cycle is completed
+            circuit.append(circuit[0])  # Add the starting vertex to complete the cycle
+            ans.append(list(circuit))   # Store the cycle
+            circuit.pop()  # Remove the added start vertex to explore other paths
+        return
+
+    for i in range(1, n + 1):
+        if not check(v, i, circuit, mat):
+            continue
+        # If adjacent and not visited, add it to the circuit
+        circuit.append(i)
+        backtrack(i, n, circuit, ans, mat)
+        circuit.pop()  # Backtrack to explore other options
+
+def hamiltonian_circuit(n, mat):
+    circuit = []  # Initially empty circuit
+    ans = []  # To store all valid circuits
+
+    for i in range(1, n + 1):  # Fix the starting vertex
+        circuit.append(i)  # Add i to the circuit
+        backtrack(i, n, circuit, ans, mat)
+        circuit.pop()  # Remove i from the circuit
+
+    return ans
+
+if __name__ == "__main__":
+    # Input for number of vertices and edges
+    n, m = map(int, input().split())
+
+    # Adjacency matrix
+    mat = [[False] * (n + 1) for _ in range(n + 1)]
+    for _ in range(m):
+        a, b = map(int, input().split())
+        mat[a][b] = True
+        mat[b][a] = True
+
+    cycles = hamiltonian_circuit(n, mat)
+
+    # Sorting cycles lexicographically
+    cycles.sort(key=lambda x: str(x))
+
+    # Output the Hamiltonian cycles
+    for cycle in cycles:
+        print(" ".join(map(str, cycle)))
+
+
+
+
+
+======================================================================
+
+Backtracking Solution
+
+
+
+def backtrack(idx, a, x, subset, ans):
+    if idx == len(a):
+        # Write your code here
+        
+        if( sum(subset) == x ):
+            ans.append(subset[:])
+
+        return
+
+    backtrack(idx + 1, a, x, subset, ans)  # Don't take the i-th integer
+
+    subset.append(a[idx])
+    backtrack(idx + 1, a, x, subset, ans)  # Take the i-th integer
+    subset.pop()
+
+def subset_sum(a, x):
+    subset = []  # Creating an empty subset
+    ans = []  # To store all the subsets
+
+    backtrack(0, a, x, subset, ans)
+
+    return ans
+
+if __name__ == "__main__":
+    n, x = map(int, input().split())
+    a = list(map(int, input().split()))
+
+    subsets = subset_sum(a, x)
+    subsets = [sorted(subset) for subset in subsets]
+    subsets.sort()
+
+    for subset in subsets:
+        print(*subset)
+
+
+
+
+
+=========================================================
+
+Subset sum problem
+
+
+def backtrack(idx, a, x, subset, ans):
+    if idx == len(a):
+        # Write your code here
+        
+        if( sum(subset) == x ):
+            ans.append(subset[:])
+
+        return
+
+    backtrack(idx + 1, a, x, subset, ans)  # Don't take the i-th integer
+
+    subset.append(a[idx])
+    backtrack(idx + 1, a, x, subset, ans)  # Take the i-th integer
+    subset.pop()
+
+def subset_sum(a, x):
+    subset = []  # Creating an empty subset
+    ans = []  # To store all the subsets
+
+    backtrack(0, a, x, subset, ans)
+
+    return ans
+
+if __name__ == "__main__":
+    n, x = map(int, input().split())
+    a = list(map(int, input().split()))
+
+    subsets = subset_sum(a, x)
+    subsets = [sorted(subset) for subset in subsets]
+    subsets.sort()
+
+    for subset in subsets:
+        print(*subset)
+
+
+
+
+
+
+=================================================================
+
+Backtracking - Find Unique Permutations
+
+
+
+from itertools import permutations
+
+def unique_permutations(arr):
+    perm = set(permutations(arr))
+    return sorted(perm)
+
+
+T = int(input())
+
+for _ in range(T):
+    N = int(input())
+    arr = list(map(int, input().split()))
+    
+    result = unique_permutations(arr)
+    
+    print(len(result))
+    
+    for perm in result:
+        print(" ".join(map(str, perm)))
+
+
+
+
+======================================================
+
+
+Backtracking - Find Valid Parenthesis
+
+
+
+
+def generate_parentheses(n):
+    result = []
+    
+    def backtrack(s='', left=0, right=0):
+        if len(s) == 2 * n:
+            result.append(s)
+            return
+        if left < n:
+            backtrack(s + '(', left + 1, right)
+        if right < left:
+            backtrack(s + ')', left, right + 1)
+    
+    backtrack()
+    return sorted(result)
+
+
+T = int(input())
+
+for _ in range(T):
+    N = int(input())
+    result = generate_parentheses(N)
+    
+    print(len(result))
+    for s in result:
+        print(s)
+
+
+
+
+
+
+
+========================================================
+
+Backtracking - Palindrome Partitioning
+
+
+
+
+def is_palindrome(s):
+    return s == s[::-1]
+
+def find_partitions(s, start, current_partition, result):
+    if start == len(s):
+        result.append(current_partition[:])
+        return
+    for i in range(start, len(s)):
+        substring = s[start:i+1]
+        if is_palindrome(substring):
+            current_partition.append(substring)
+            find_partitions(s, i+1, current_partition, result)
+            current_partition.pop()
+
+def palindrome_partitions(s):
+    result = []
+    find_partitions(s, 0, [], result)
+    result.sort()
+    return result
+
+
+T = int(input())
+for _ in range(T):
+    s = input().strip()
+    partitions = palindrome_partitions(s)
+    
+    print(len(partitions))
+    for partition in partitions:
+        print(" ".join(partition))
+
+
+
+
+
+
+Any two adjacent vertices in the path must in adjacent in the graph.
+No vertex should be visited more than once (except the starting vertex).
+Starting and ending vertex should be the same.
+
+
+
+The sum of integers in the subset must be X.
+
+
+
+==========================================================
+
+
+N Queens - Backtracking
+
+
+import java.util.Arrays;
+
+class main {
+
+    // Directions to check if queens attack another
+    static int[] dx = {0, 0, -1, -1, -1, 1, 1, 1};
+    static int[] dy = {-1, 1, 0, -1, 1, 0, -1, 1};
+
+    static boolean check(char[][] board, int n, int row, int col) {
+        for (int k = 0; k < 8; k++) {
+            int x = row, y = col;
+            while (x >= 0 && x < n && y >= 0 && y < n) {
+                if (board[x][y] == 'Q') {
+                    return false; // Queen attacks another
+                }
+                x += dx[k];
+                y += dy[k];
+            }
+        }
+        return true; // Can place queen here
+    }
+
+    static void backtrack(int row, int n, char[][] board) {
+        if (row == n) { // No more rows to fill
+            for (char[] x : board) { // Print the solution
+                System.out.println(new String(x));
+            }
+            System.out.println();
+            return;
+        }
+        for (int col = 0; col < n; col++) {
+            if (check(board, n, row, col)) {
+                board[row][col] = 'Q'; // Add the queen
+                backtrack(row + 1, n, board);
+                board[row][col] = '.'; // Remove the queen
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int n = 5;
+        char[][] board = new char[n][n]; // Initialise an empty board
+        for (char[] row : board) {
+            Arrays.fill(row, '.');
+        }
+        backtrack(0, n, board);
+    }
+}
+
+====================================================
+N Queens
+
+
+def is_safe(board, row, col, n):
+    # Check if there is a queen in the same column
+    for i in range(row):
+        if board[i][col] == 'Q':
+            return False
+
+    # Check if there is a queen in the left diagonal
+    for i, j in zip(range(row, -1, -1), range(col, -1, -1)):
+        if board[i][j] == 'Q':
+            return False
+
+    # Check if there is a queen in the right diagonal
+    for i, j in zip(range(row, -1, -1), range(col, n)):
+        if board[i][j] == 'Q':
+            return False
+
+    return True
+
+def solve_n_queens_util(board, row, n, result):
+    if row == n:
+        result.append([''.join(row) for row in board])
+        return
+
+    for col in range(n):
+        if is_safe(board, row, col, n):
+            board[row][col] = 'Q'
+            solve_n_queens_util(board, row + 1, n, result)
+            board[row][col] = '.'  # Backtrack
+
+def solve_n_queens(n):
+    board = [['.' for _ in range(n)] for _ in range(n)]
+    result = []
+    solve_n_queens_util(board, 0, n, result)
+    return result
+
+if __name__ == "__main__":
+    n = int(input())
+    solutions = solve_n_queens(n)
+    solutions.reverse()
+    for solution in solutions:
+        print("\n".join(solution))
+        print()
+
+==========================================================
+
+
+Satisfying the Constraints
+
+import java.util.*;
+
+class main {
+
+    // Check if 'next' vertex can be added after vertex 'v'
+    static boolean check(int v, int next, ArrayList<Integer> circuit, boolean[][] mat) {
+        // Write your code here
+        
+        if( !mat[v][next ] || circuit.indexOf(next)!=-1 )
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    static void backtrack(int v, int n, ArrayList<Integer> circuit, ArrayList<ArrayList<Integer>> ans, boolean[][] mat) {
+        if (circuit.size() == n) { // Circuit is completed
+            if (mat[circuit.get(0)][v]) { // Check if cycle is completed, starting should be adjacent to ending
+                circuit.add(circuit.get(0));
+                ans.add(new ArrayList<>(circuit));
+                circuit.remove(circuit.size() - 1);
+            }
+            return;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            // Calling the check function
+            if (!check(v, i, circuit, mat))
+                continue;
+
+            // If not visit and is adjacent, add it to our candidate solution
+            circuit.add(i);
+            backtrack(i, n, circuit, ans, mat);
+            circuit.remove(circuit.size() - 1);
+        }
+    }
+
+    // Number of vertices and adjacency matrix
+    static ArrayList<ArrayList<Integer>> hamiltonianCircuit(int n, boolean[][] mat) {
+        ArrayList<Integer> circuit = new ArrayList<>(); // Initially empty circuit
+        ArrayList<ArrayList<Integer>> ans = new ArrayList<>(); // To store all the circuits
+
+        for (int i = 1; i <= n; i++) { // Fix the starting vertex
+            circuit.add(i); // Add i to circuit
+            backtrack(i, n, circuit, ans, mat);
+            circuit.remove(circuit.size() - 1); // Remove i from circuit
+        }
+
+        return ans;
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        int n = scanner.nextInt();
+        int m = scanner.nextInt();
+
+        // Adjacency matrix
+        boolean[][] mat = new boolean[n + 1][n + 1];
+        while (m-- > 0) {
+            int a = scanner.nextInt();
+            int b = scanner.nextInt();
+            mat[a][b] = true;
+            mat[b][a] = true;
+        }
+        ArrayList<ArrayList<Integer>> cycles = hamiltonianCircuit(n, mat);
+        cycles.sort((x, y) -> {
+            return x.toString().compareTo(y.toString());
+        });
+
+        for (ArrayList<Integer> x : cycles) {
+            for (int y : x) {
+                System.out.print(y + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+
+
+==========================================================================
+
+Hamiltonian Circuit
+
+def check(v, next_v, circuit, mat):
+    # Check if 'next' vertex can be added after vertex 'v'
+    if not mat[v][next_v] or next_v in circuit:
+        return False
+    return True
+
+def backtrack(v, n, circuit, ans, mat):
+    if len(circuit) == n:  # Circuit is completed
+        if mat[circuit[0]][v]:  # Check if cycle is completed
+            circuit.append(circuit[0])  # Add the starting vertex to complete the cycle
+            ans.append(list(circuit))   # Store the cycle
+            circuit.pop()  # Remove the added start vertex to explore other paths
+        return
+
+    for i in range(1, n + 1):
+        if not check(v, i, circuit, mat):
+            continue
+        # If adjacent and not visited, add it to the circuit
+        circuit.append(i)
+        backtrack(i, n, circuit, ans, mat)
+        circuit.pop()  # Backtrack to explore other options
+
+def hamiltonian_circuit(n, mat):
+    circuit = []  # Initially empty circuit
+    ans = []  # To store all valid circuits
+
+    for i in range(1, n + 1):  # Fix the starting vertex
+        circuit.append(i)  # Add i to the circuit
+        backtrack(i, n, circuit, ans, mat)
+        circuit.pop()  # Remove i from the circuit
+
+    return ans
+
+if __name__ == "__main__":
+    # Input for number of vertices and edges
+    n, m = map(int, input().split())
+
+    # Adjacency matrix
+    mat = [[False] * (n + 1) for _ in range(n + 1)]
+    for _ in range(m):
+        a, b = map(int, input().split())
+        mat[a][b] = True
+        mat[b][a] = True
+
+    cycles = hamiltonian_circuit(n, mat)
+
+    # Sorting cycles lexicographically
+    cycles.sort(key=lambda x: str(x))
+
+    # Output the Hamiltonian cycles
+    for cycle in cycles:
+        print(" ".join(map(str, cycle)))
+
+
+=====================================================
+
+Backtracking Solution
+
+
+def backtrack(idx, a, x, subset, ans):
+    if idx == len(a):
+        # Write your code here
+        
+        if( sum(subset) == x ):
+            ans.append(subset[:])
+
+        return
+
+    backtrack(idx + 1, a, x, subset, ans)  # Don't take the i-th integer
+
+    subset.append(a[idx])
+    backtrack(idx + 1, a, x, subset, ans)  # Take the i-th integer
+    subset.pop()
+
+def subset_sum(a, x):
+    subset = []  # Creating an empty subset
+    ans = []  # To store all the subsets
+
+    backtrack(0, a, x, subset, ans)
+
+    return ans
+
+if __name__ == "__main__":
+    n, x = map(int, input().split())
+    a = list(map(int, input().split()))
+
+    subsets = subset_sum(a, x)
+    subsets = [sorted(subset) for subset in subsets]
+    subsets.sort()
+
+    for subset in subsets:
+        print(*subset)
+
+
+======================================================
+
+Subset sum problem
+
+def backtrack(idx, a, x, subset, ans):
+    if idx == len(a):
+        # Write your code here
+        
+        if( sum(subset) == x ):
+            ans.append(subset[:])
+
+        return
+
+    backtrack(idx + 1, a, x, subset, ans)  # Don't take the i-th integer
+
+    subset.append(a[idx])
+    backtrack(idx + 1, a, x, subset, ans)  # Take the i-th integer
+    subset.pop()
+
+def subset_sum(a, x):
+    subset = []  # Creating an empty subset
+    ans = []  # To store all the subsets
+
+    backtrack(0, a, x, subset, ans)
+
+    return ans
+
+if __name__ == "__main__":
+    n, x = map(int, input().split())
+    a = list(map(int, input().split()))
+
+    subsets = subset_sum(a, x)
+    subsets = [sorted(subset) for subset in subsets]
+    subsets.sort()
+
+    for subset in subsets:
+        print(*subset)
+
+========================================================
+
+Backtracking - Find Unique Permutations
+
+from itertools import permutations
+
+def unique_permutations(arr):
+    perm = set(permutations(arr))
+    return sorted(perm)
+
+
+T = int(input())
+
+for _ in range(T):
+    N = int(input())
+    arr = list(map(int, input().split()))
+    
+    result = unique_permutations(arr)
+    
+    print(len(result))
+    
+    for perm in result:
+        print(" ".join(map(str, perm)))
+=================================================
+
+Backtracking - Find Valid Parenthesis
+
+def generate_parentheses(n):
+    result = []
+    
+    def backtrack(s='', left=0, right=0):
+        if len(s) == 2 * n:
+            result.append(s)
+            return
+        if left < n:
+            backtrack(s + '(', left + 1, right)
+        if right < left:
+            backtrack(s + ')', left, right + 1)
+    
+    backtrack()
+    return sorted(result)
+
+
+T = int(input())
+
+for _ in range(T):
+    N = int(input())
+    result = generate_parentheses(N)
+    
+    print(len(result))
+    for s in result:
+        print(s)
+
+==================================================
+
+Backtracking - Palindrome Partitioning
+
+def is_palindrome(s):
+    return s == s[::-1]
+
+def find_partitions(s, start, current_partition, result):
+    if start == len(s):
+        result.append(current_partition[:])
+        return
+    for i in range(start, len(s)):
+        substring = s[start:i+1]
+        if is_palindrome(substring):
+            current_partition.append(substring)
+            find_partitions(s, i+1, current_partition, result)
+            current_partition.pop()
+
+def palindrome_partitions(s):
+    result = []
+    find_partitions(s, 0, [], result)
+    result.sort()
+    return result
+
+
+T = int(input())
+for _ in range(T):
+    s = input().strip()
+    partitions = palindrome_partitions(s)
+    
+    print(len(partitions))
+    for partition in partitions:
+        print(" ".join(partition))
+
+
+=============================================================
+
+Bound Heuristics and Implementation
+
+
+import heapq
+import sys
+
+infinity = sys.maxsize
+
+def cmp(a, b):
+    return a[1] * b[0] > a[0] * b[1]
+
+# Pick items from index idx, weight remaining
+def fractional_knapsack(idx, items, weight):
+    ans = 0
+    for i in range(idx, len(items)):
+        if items[i][0] <= weight:
+            weight -= items[i][0]
+            ans += items[i][1]
+        else:
+            fraction = weight / items[i][0]
+            ans += fraction * items[i][1]
+
+    return int(ans)
+
+def branch_and_bound(n, wmax, items):
+    # q stores [cost + lower_bound, weight of the items, cost of the items, next item to consider]
+    q = []
+
+    # Invert the sign of all the items
+    items = [(x[0], -x[1]) for x in items]
+
+    # Presort to perform fractional knapsack
+    items.sort(key=lambda x: (x[1], -x[0]))
+
+    upper_bound = infinity
+
+    heapq.heappush(q, [0 + fractional_knapsack(0, items, wmax), 0, 0, 0])
+
+    while q:
+        cost_lower_bound, weight, cost, item = heapq.heappop(q)
+
+        if cost_lower_bound >= upper_bound:
+            continue
+
+        # At least a solution with "cost" is promised
+        upper_bound = min(upper_bound, cost)
+
+        for i in range(item, n):
+            if items[i][0] + weight > wmax:  # weight limit exceeded
+                continue
+            new_cost = cost + items[i][1]
+            new_weight = weight + items[i][0]
+            cost_lower_bound = new_cost + fractional_knapsack(i, items, wmax - new_weight)
+            heapq.heappush(q, [cost_lower_bound, new_weight, new_cost, i + 1])
+
+    return -upper_bound  # invert the sign
+
+if __name__ == "__main__":
+    n, wmax = map(int, input().split())
+    items = [tuple(map(int, input().split())) for _ in range(n)]
+
+    print(branch_and_bound(n, wmax, items))
+
+
+
+==============================================================
+
+Knapsack Problem
+
+import heapq
+import sys
+
+infinity = sys.maxsize
+
+def cmp(a, b):
+    return a[1] * b[0] > a[0] * b[1]
+
+# Pick items from index idx, weight remaining
+def fractional_knapsack(idx, items, weight):
+    ans = 0
+    for i in range(idx, len(items)):
+        if items[i][0] <= weight:
+            weight -= items[i][0]
+            ans += items[i][1]
+        else:
+            fraction = weight / items[i][0]
+            ans += fraction * items[i][1]
+
+    return int(ans)
+
+def branch_and_bound(n, wmax, items):
+    # q stores [cost + lower_bound, weight of the items, cost of the items, next item to consider]
+    q = []
+
+    # Invert the sign of all the items
+    items = [(x[0], -x[1]) for x in items]
+
+    # Presort to perform fractional knapsack
+    items.sort(key=lambda x: (x[1], -x[0]))
+
+    upper_bound = infinity
+
+    heapq.heappush(q, [0 + fractional_knapsack(0, items, wmax), 0, 0, 0])
+
+    while q:
+        cost_lower_bound, weight, cost, item = heapq.heappop(q)
+
+        if cost_lower_bound >= upper_bound:
+            continue
+
+        # At least a solution with "cost" is promised
+        upper_bound = min(upper_bound, cost)
+
+        for i in range(item, n):
+            if items[i][0] + weight > wmax:  # weight limit exceeded
+                continue
+            new_cost = cost + items[i][1]
+            new_weight = weight + items[i][0]
+            cost_lower_bound = new_cost + fractional_knapsack(i, items, wmax - new_weight)
+            heapq.heappush(q, [cost_lower_bound, new_weight, new_cost, i + 1])
+
+    return -upper_bound  # invert the sign
+
+if __name__ == "__main__":
+    n, wmax = map(int, input().split())
+    items = [tuple(map(int, input().split())) for _ in range(n)]
+
+    print(branch_and_bound(n, wmax, items))
+
+=====================================================
+
+
+Coding problem - 1
+
+# cook your dish here
+
+t = int(input())
+
+for _ in range(t):
+    n = int(input())
+    b = list( map( int , input().split() ) )
+    g = list( map( int , input().split() ) )
+    
+    b.sort()
+    
+    g.sort( reverse = True )
+    
+    lv = []
+
+   
+    for i in range(0 , len(b)):
+        
+        lv.append( b[i]+ g[i] )
+
+    print( max(lv) )
+    
+==================================================
+
+Implement the algorithm
+
+
+import random
+
+def quick_sort(arr):
+    if len(arr) <= 1:
+        return arr
+        
+    rand_num = random.choice( range( 0 , len(arr) ) )
+    
+    pivot = arr[rand_num]
+    
+    left = []
+    right = []
+    
+    for element in arr[:rand_num] + arr[rand_num+1 :] :
+        if element < pivot:
+            left.append(element)
+        else:
+            right.append(element)
+    
+    return quick_sort(left) + [pivot] + quick_sort(right)
+
+
+t = int(input())
+for _ in range(t):
+    N = int(input())
+    A = list(map(int, input().split()))
+    sorted_array = quick_sort(A)
+    print(*sorted_array)
+
+===============================================
+
+Coding problem - 2
+
+
+# cook your dish here
+
+
+t = int(input())
+
+for _ in range(t):
+    n = int(input())
+    
+    l = list( map( int , input().split() ) )
+    
+    mymap = {}
+    
+    for i in l:
+        
+        mymap[i] = mymap.get(i , 0) +1
+        
+    maxval =0
+        
+    for val in mymap.values():
+        maxval = max( maxval , val )
+    
+    if( maxval == 1 and n >1 ):
+        print( n-2 )
+        continue
+    
+    print(n-maxval)
+        
+        
+        
+
+
+
+====================================================
+
+Coding problem - 3
+
+# cook your dish here
+t = int(input())
+
+for _ in range(t):
+    N = int(input())
+    weights = list(map(int, input().split()))
+    jumps = list(map(int, input().split()))
+    positions = list(range(N))
+    
+    frogs = [(weights[i], positions[i], jumps[i]) for i in range(N)]
+    frogs.sort()
+    
+    total_hits = 0
+    
+    for i in range(1, N):
+        while frogs[i][1] <= frogs[i - 1][1]:
+            frogs[i] = (frogs[i][0], frogs[i][1] + frogs[i][2], frogs[i][2])
+            total_hits += 1
+            
+    print(total_hits)
+
+
+
+
+==================================================
+Coding problem - 1
+Let us begin this week on 'Bin packing' problems with a practice problem
+
+def myfun(n, colors):
+    
+    t = colors.count(n)
+    
+    meow = [ data for data in colors if data != n ]
+    
+
+    tn = len(colors)-t
+    
+    ratio = sum(meow)/(n)
+    
+
+    if( ratio >= tn-1  ):
+        t += sum(meow)- (tn-1)*n
+        
+        print( sum(meow)- (tn-1)*n  )
+        
+    else:
+        print(0)
+    
+
+t = int(input())
+for _ in range(t):
+    boxes, cc = map(int, input().split())
+    colors = list(map(int, input().split()))
+    myfun(boxes, colors)
+
+
+==============================================================
+
+Bin packing problem - Classic problem
+
+def first_fit_decreasing_bin_packing(item_sizes, bin_capacity):
+    sorted_item_sizes = sorted(item_sizes, reverse=True)
+    bins = []
+
+    for item in sorted_item_sizes:
+        placed = False
+        for i in range(len(bins)):
+            if bins[i] + item <= bin_capacity:
+                bins[i] += item
+                placed = True
+                break
+        if not placed:
+            bins.append(item)
+
+    return len(bins)
+
+t = int(input())
+for _ in range(t):
+    N, M = map(int, input().split())
+    arr = list(map(int, input().split()))
+    result = first_fit_decreasing_bin_packing(arr, M)
+    print(result)
+
+
+=========================================================
+Bin packing problem - Variation
+
+
+def first_fit_decreasing_bin_packing(item_sizes, bin_capacity):
+    sorted_item_sizes = sorted(item_sizes, reverse=True)
+ 
+    even =[]
+    odd =[]
+    
+    for ele in sorted_item_sizes:
+        if ele%2 ==0:
+            even.append(ele)
+        else:
+            odd.append(ele)
+    
+    ans =0
+    
+    ans += pack(even , bin_capacity)
+    ans += pack(odd , bin_capacity)
+    
+    return ans
+    
+def pack(items , bin_capacity):
+    bins = []
+    
+    for item in items:
+        placed = False
+        for i in range(len(bins)):
+            if bins[i] + item <= bin_capacity:
+                bins[i] += item
+                placed = True
+                break
+        if not placed:
+            bins.append(item)
+
+    return len(bins)
+    
+
+t = int(input())
+for _ in range(t):
+    N, M = map(int, input().split())
+    arr = list(map(int, input().split()))
+    
+    result = first_fit_decreasing_bin_packing(arr, M)
+    print(result)
+
+
+==========================================================
+
+Coding problem - 2
+The following problem is a problem requiring a Greedy approach and is a variant of the bin packing problem.
+Code out the solution in the IDE!
+
+def max_total_energy(T, test_cases):
+    results = []
+    
+    for i in range(T):
+        N, M, H = test_cases[i][0]
+        A = test_cases[i][1]
+        B = test_cases[i][2]
+
+        A.sort(reverse=True)
+        B.sort(reverse=True)
+
+        max_energy = 0
+        for j in range(min(N, M)):
+            max_energy += min(A[j], B[j] * H)
+        
+        results.append(max_energy)
+    
+    return results
+
+
+T = int(input())
+test_cases = []
+
+for _ in range(T):
+    N, M, H = map(int, input().split())
+    A = list(map(int, input().split()))
+    B = list(map(int, input().split()))
+    test_cases.append(((N, M, H), A, B))
+
+results = max_total_energy(T, test_cases)
+
+for res in results:
+    print(res)
+
+
+
+=======================================================
+Coding problem - 3
+
+t = int(input())  
+
+for _ in range(t):
+    n = int(input())  
+    c = list(map(int, input().split()))  
+    print( n - max(c) )
+
+
+===========================================================
+Coding problem - 4
+
+
+import sys
+from collections import defaultdict
+
+input = sys.stdin.read
+data = input().splitlines()
+
+T = int(data[0])
+index = 1
+
+results = []
+for _ in range(T):
+    N, W, Wr = map(int, data[index].split())
+    index += 1
+    
+    weights = list(map(int, data[index].split()))
+    index += 1
+    
+    total_weight = Wr
+    weight_map = defaultdict(int)
+
+    for w in weights:
+        weight_map[w] += 1
+    
+    for weight, count in weight_map.items():
+        pairs = count // 2
+        total_weight += pairs * 2 * weight
+    
+    if total_weight >= W:
+        results.append("YES")
+    else:
+        results.append("NO")
+
+print("\n".join(results))
+====================================================
+average permutation
+
+# cook your dish here
+for _ in range(int(input())):
+    n=int(input())
+    a=[]
+    for i in range(n):
+        a.append(i+1)
+    a[-2],a[-3],a[0]=a[-3],a[0],a[-2]
+    if len(a)>=5:
+        a[1],a[-4]=a[-4],a[1]
+    print(*a)
+=======================================
+HOTEL BYTELANDIA
+
+# cook your dish here
+for _ in range(int(input())):
+    n = int(input())
+    
+    come = [int(x) for x in input().split()]
+    go   = [int(x) for x in input().split()]
+    
+    time = 0
+    maxcount = 0
+    count = 0
+    while (time <= max(max(come), max(go))):
+        if (time in come):
+            count += come.count(time)
+        if (time in go):
+            count -= go.count(time)
+        
+        if (count > maxcount):
+            maxcount = count
+            
+        time += 1
+    
+    print(maxcount)
+    
+    ===============================================
+MIGHTY FRINED
+
+# cook your dish here
+for _ in range(int(input())):
+    n,k=map(int,input().split())
+    l=list(map(int,input().split()))
+    m,t=[],[]
+    for i in range(n):
+        if(i%2==0):
+            m.append(l[i])
+        else:
+            t.append(l[i])
+    i=0
+    while(i<k):
+        a=max(m)
+        b=min(t)
+        m.remove(a)
+        t.append(a)
+        t.remove(b)
+        m.append(b)
+        i+=1
+    if(sum(m)<sum(t)):
+        print('YES')
+    else:
+        print('NO')
+            
+==============================================
+ARRAY HALVES
+# cook your dish here
+
+for _ in range(int(input())):
+    n = int(input())
+    array = list(map(int, input().split()))
+    min_swap,j = 0,0
+    for i in range(2*n):
+        if array[i] <= n:
+            min_swap += (i-j)
+            j += 1 
+    print(min_swap)
+==================================
+BELLA CIAO
+# Taking the input of t and running the loop
+for _ in range(int(input())):
+    D, d, P, Q = map(int,input().split())
+    # quo is the total number of cluster of days
+    quo=D//d
+    # rem is the remaining days
+    rem=D%d
+    # Initializng the ans to 0
+    ans=0
+    # Using the formula of sum = n/2[2a+(n-1)d)] calculating the answer only for clusters
+    ans=(quo)*(2*P+(quo-1)*Q)//2
+    # Now each of the cluster has d days so multiplying by d
+    ans=ans*d
+    # Now adding the contribution for the remaining days 
+    # For the remaining days we have quo as the coeff. of Q
+    # Sum will be P + quo*Q and it will be multiplied with no of remaining days
+    a=((P+quo*Q)*rem)
+    # Adding it to the answer
+    ans+=a
+    # Printing the final answer
+    print(int(ans))
+====================================================
+PLUSLE AND MINUM ON ARRAY
+# cook your dish here
+for _ in range(int(input())):
+    n=int(input())
+    nums=list(map(int, input().split()))
+    for i in range(n):
+        nums[i]=abs(nums[i])
+    add=sorted(nums[0:n:2])
+    minus=sorted(nums[1:n:2],reverse = True)
+    if add[0] < minus[0]:
+        add[0],minus[0]=minus[0],add[0]
+    print(sum(add)-sum(minus))
+    
+============================================
+STRING GAME
+for _ in range(int(input())):
+    n = int(input())
+    s = input()
+    assert len(s) == n
+    n_moves = min(s.count('0'), s.count('1'))
+    print('Zlatan' if n_moves % 2 == 1 else 'Ramos')
+===========================================
+REMOVE ELEMENT
+# cook your dish here
+for _ in range(int(input())):
+    n, k = map(int,input().split())
+    arr = list(map(int,input().split()))
+    # arr.sort()
+    d = max(arr)
+    e = min(arr)
+    # print(d)
+    if n==1:
+        print("YES")
+    elif d>k:
+        print("NO")
+    elif d + e<=k:
+        print("YES")
+    else:
+        print("NO")
+        
+    
+============================================
+MAXIMIZE COLORS
+T = int(input())
+
+for _ in range(T):
+    X, Y, Z = map(int, input().split())
+    c = 0
+    
+    if X > 0:
+        c += 1
+    if Y > 0:
+        c += 1
+    if Z > 0:
+        c += 1
+    
+    r = [X-1, Y-1, Z-1]
+    r.sort()
+    
+    if r[0] >= 2:
+        c += 3
+    elif r[0] == 1 and r[2] >= 2:
+        c += 2
+    elif r[1] >= 1:
+        c += 1
+    
+    print(c)
+    
+==================================
+FIT TO PAY
+# cook your dish here
+for _ in range(int(input())):
+    n =int(input())
+    goals=list(map(int, input().split()))
+    min_goal=goals[0]
+    max_goal=0
+    for i in range(n):
+        if goals[i] < min_goal:
+            min_goal = goals[i]
+        elif goals[i] - min_goal > max_goal:
+             max_goal = goals[i] - min_goal
+    if max_goal > 0:
+        print(max_goal)
+    else:
+        print("UNFIT")
+        
+=======================================
+EQUALITY
+# cook your dish here
+for _ in range(int(input())):
+    n = int(input())
+    arr = list(map(int,input().split()))
+    sum =0
+    for i in arr:
+        sum+=i
+    d= int(sum /(n-1))
+    for i in range(n):
+        print(d-arr[i], end=" ")
+    print('')
+    
+==========================================
+DECREASING SRRNMIEEDA
+# cook your dish here
+t=int(input())
+for _ in range(t):
+    l,r=map(int,input().split())
+    if l>=(r-l+1):
+        print(r)
+    else:
+        print(-1)
+======================================
+AVERAGE ARRAY
+for _ in range(int(input())):
+    n, m = tuple(map(int,input().split()))
+    a = []
+    if n % 2 == 1:
+        a = [m]
+    for i in range(n // 2):
+        a = [m - i - 1] + a + [m + i + 1]
+    print(" ".join(map(str,a)))
+==========================================
+PARALLEL PROCESSING
+#include <bits/stdc++.h>
+#define ll long long
+using namespace std;
+
+void solve(){
+  ll n;
+  cin >> n;
+  ll a[n];
+  for(ll i=0; i<n; i++) cin >> a[i];
+  ll f=0,s=0,i=0,j=n-1;
+  
+  while(i<=j){
+    if(f<s) f+= a[i++];
+    else s+= a[j--];
+  }
+
+  cout << max(f,s)<< endl;
+}
+int main(){
+  ll tc;
+  cin >> tc;
+  while(tc--) solve();
+}
+===============================
+REVERSING DIRECTIONS
+T = int(input())
+
+for _ in range(T):
+    n = int(input())
+    u = [0] * n
+    s = [0] * n
+    
+    for i in range(n):
+        x = input()
+        u[i] = x[0]
+        if x[0] == 'L':
+            s[i] = x[8:]
+        else:
+            s[i] = x[9:]
+            
+    
+    print('Begin on', s[n - 1])  
+    for i in range(n - 1, 0, -1):
+        if u[i] == 'L':
+            print('Right on', s[i - 1])
+        else:
+            print('Left on', s[i - 1])
+        
+======================================
+FULL BARRIER ALCHEMIST
+for _ in range(int(input())):
+    num_bar,height,y1,y2,l=map(int,input().split())
+    counter=0
+    for _2 in range(num_bar):
+        t,x=map(int,input().split())
+        if t==1:
+            if (height-y1)>x:
+                l-=1
+        else:
+            if y2<x:
+                l-=1
+        if l>=1:
+            counter+=1
+    print(counter)
+==============================
+BALANCED AND UNIQUE ARRAYS
+for _ in range(int(input())):
+    n=int(input())
+    if n%4==0:
+        print("YES")
+        for i in range(1,n//4+1):
+            print(i,end=" ")
+        for i2 in range(n,n-n//4,-1):
+            print(i2,end=" ")
+        print()
+        for i3 in range(n//4+1,n//2+1):
+            print(i3,end=" ")
+        for i4 in range(n//2+1,n-n//4+1):
+            print(i4,end=" ")
+        print()
+    else:
+        print("NO")
+===================================
+MAXIMUM ANGRINESS
+# cook your dish here
+for i in range(int(input())):
+    a,b=map(int,input().split())
+    s=a*(a-1)//2
+    f=a-(2*b)
+    if(b<a/2):
+        
+        s=s-f*(f-1)//2
+    print(s)
+======================================
+PERMUTATION XORITY
+for _ in range(int(input())):
+    n = int(input())
+    if n == 2:
+        print(-1)
+    else:
+        a = list(range(1, n + 1))
+        if n % 2 == 0:
+            a.insert(1, n)
+            a = a[:-1]
+        print(*a)
+===============================
+AKASH AND DINNER
+t = int(input())
+
+for _ in range(t):
+    n, k = map(int,input().split())
+    a = list(map(int,input().split()))
+    b = list(map(int,input().split()))
+    d = dict()
+    
+    #find min time for each category
+    for i in range(n):
+        if d.get(a[i],-1) == -1:
+            d[a[i]] = b[i]
+        else:
+            d[a[i]] = min(d.get(a[i],0),b[i])
+    
+    m = len(d)
+    
+    if k > m:
+        print(-1)
+    else:
+        ans = sum(list(sorted(d.values())[:k]))
+        print(ans)
+===============================
+HTML TAGS
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+
+int main() 
+{
+	ll t,n,i,j,k;
+	cin >> t;
+	while(t--)
+	{
+	    string s;
+	    cin >> s;
+	    if(s.length()<=3)
+	    {
+	        cout << "Error\n";
+	        continue;
+	    }
+	    if((s[0]!='<')||(s[s.length()-1]!='>')||(s[1]!='/'))
+	    {
+	        cout << "Error\n";
+	        continue;
+	    }
+	    for(i=2;i<s.length()-1;i++)
+	    {
+	        if((s[i]>='0' && s[i]<='9')||(s[i]>='a' && s[i]<='z'))
+	            continue;
+	        else
+	            break;
+	    }
+	    if(i==s.length()-1)
+	        cout << "Success\n";
+	    else
+	        cout << "Error\n";
+	}
+	return 0;
+}
+==================================
+CHEF AND COINS GAME
+#include <bits/stdc++.h>
+using namespace std;
+
+void solve() {
+    // 105ma
+    int n; cin>>n;
+    if(n%6 == 0) cout<<"Misha\n";
+    else cout<<"Chef\n";
+}
+int main() {
+	// your code goes here
+	ios_base::sync_with_stdio(0);
+	cin.tie(0); cout.tie(0);
+	int t;cin>>t;
+	while(t--) {
+	    solve();
+	}
+	return 0;
+}
+
+=======================
+MAKE ARRAY ODD
+# cook your dish here
+for i in range(int(input())):
+    n,x = map(int,input().split())
+    a = list(map(int,input().split()))
+    even  = 0
+    odd = 0
+    for i in a :
+        if i % 2 == 0:
+            even += 1 
+        else:
+            odd += 1 
+    if x%2 == 0:
+        if odd == 0:
+            print(-1)
+        else:
+            print(even)
+    else:
+        print((even//2) + (even % 2))
+==================================
+CUTTING PIZZA
+#include <bits/stdc++.h>
+using namespace std;
+#define int long long
+int gcd(int a, int b ){
+    if (b==0){
+        return a;
+    }
+    else{
+        return gcd(a,a%b);
+    }
+}
+signed main(){
+    int n;
+    cin>>n;
+    while(n--){
+        int a;
+        cin>>a;
+        int g=INT_MAX;
+        vector<int> v(a);
+        for(int i=0;i<a;i++){
+            cin>>v[i];
+            if(i>0){
+                g=min(g,v[i]-v[i-1]);
+            }
+        }
+        if(a==1){
+            cout<<1<<endl;
+        }
+        int t=gcd(360,g);
+        int l=360/t;
+        cout<<l-a<<"\n";
+    }
+	return 0;
+}
+===============================
+COUNTING FLAGS
+
+for _ in range(int(input())):
+    n=int(input())
+    pattern1=n*(n-1)*(n-1)
+    pattern2=n*(n-1)*(n-1)
+    pattern3=n*(n-1)*(n-2)
+    pattern4=n*(n-1)*(n-2)*(n-2)
+    pattern5=n*(n-1)*(n-2)*(n-2)
+    print(pattern1+pattern2+pattern3+pattern4+pattern5)
+    
+
+    
+========================
+CONTROL THE POLLUTION
+# cook your dish here
+import math
+for _ in range(int(input())):
+    n,x,y=map(int,input().split())
+    bus=math.ceil(n/100)*x
+    car=math.ceil(n/4)*y
+    car_bus=n//4*y+math.ceil((n-4*(n//4))/100)*x
+    bus_car=n//100*x+math.ceil((n-100*(n//100))/4)*y
+    print(min(bus,car,car_bus,bus_car))
+=============================
+YET ANOTHER SOD PROBLEM 
+# cook your dish here
+import math;
+for _ in range(int(input())):
+    l,r=map(int,input().split());
+    p1,p2=math.ceil(l/3),math.floor(r//3);
+    print(int(p2-p1+1));
+============================
+TRIANGLE CLASSIFICATION
+# cook your dish here
+import math
+
+def dis(x1,y1,x2,y2):
+    d=((x1-x2)**2+(y1-y2)**2)
+    return d
+
+sid=int(input())
+T = int(input())
+for tc in range(T):
+    x1,y1,x2,y2,x3,y3= (map(int, input().split(' ')))
+    d1=dis(x1,y1,x2,y2)
+    d2=dis(x1,y1,x3,y3)
+    d3=dis(x2,y2,x3,y3)
+    t=""
+    a=''
+    M=max(d1,d2,d3)
+    sumd=d1+d2+d3
+    if d1!=d2 and d2!=d3 and d1!=d3:
+        t="Scalene"
+    else:
+        t="Isosceles"
+    if sid ==1:
+        print(t,"triangle")
+    elif sid==2:
+        if M==sumd-M:
+            a="right"
+        elif M>sumd-M:
+            a="obtuse"
+        else:
+            a='acute'
+        print(t,a,"triangle")
+=====================
+CHEF AND ADVENTURES
+#include <bits/stdc++.h>
+#define ll long long int
+using namespace std;
+
+int main() 
+{
+	ll t,n,i,j,k;
+	cin >> t;
+	while(t--)
+	{
+	    ll x,y,m;
+	    cin >> n >> m >> x >> y;
+	    if(x==1ll || y==1ll)
+	    {
+	        if((x!=1) && (((n-1)%x==0)||(m>1 && (n-1)%x==1)))
+	             cout << "Chefirnemo\n";
+	        else if((y!=1) && (((m-1)%y==0)||(n>1 && (m-1)%y==1)))
+	             cout << "Chefirnemo\n";
+	        else if(x!=1 || y!=1)
+	            cout << "Pofik\n";
+	        else
+	            cout << "Chefirnemo\n"; 
+	    }
+	    else if(((n-1)%x==0) &&  ((m-1)%y==0))
+	        cout << "Chefirnemo\n";
+	    else if(((n-1)%x==1) &&  ((m-1)%y==1))
+	        cout << "Chefirnemo\n";
+	    else
+	        cout << "Pofik\n";
+	}
+	return 0;
+}
+========================
+MAGICAL PLANKS
+#include <iostream>
+using namespace std;
+
+
+int main() {
+	// your code goes here
+	
+	long int t,n,i,cnt;
+	cin>>t;
+	while(t--)
+	{
+	    cin>>n;
+	    string s;
+	    cin>>s;
+	    cnt=0;
+	    for(int i=0;i<n-1;i++)
+	    {
+	        if(s[i] != s[i+1])
+	        cnt++;
+	    }
+	    if(cnt%2 == 0)
+	    cout<<cnt/2<<endl;
+	    else
+	    cout<<(cnt+1)/2<<endl;
+	}
+	return 0;
+}
+==========================
+APPROXIMATELY II
+#include <bits/stdc++.h>
+using namespace std;
+#define ll long long int
+
+
+int main() 
+{
+	ll t,n,i,j,k;
+	cin >> t;
+	while(t--)
+	{
+	    cin >> n >> k;
+	    vector<ll>v(n,0ll);
+	    for(i=0;i<n;i++)
+	    {
+	        cin >> v[i];
+	    }
+	    ll mini=INT_MAX;
+	    for(i=0;i<n-1;i++)
+	    {
+	        for(j=i+1;j<n;j++)
+	        {
+	            mini=min(abs(v[i]+v[j]-k),mini);
+	        }
+	    }
+	    cout << mini << " ";
+	    ll cnt=0ll;
+	    for(i=0;i<n-1;i++)
+	    {
+	        for(j=i+1;j<n;j++)
+	        {
+	            if((abs(v[i]+v[j]-k)==mini))
+	                cnt++;
+	        }
+	    }
+	    cout <<cnt<< "\n";
+	}
+	return 0;
+}
+==========================
+MAGIC SET
+#include <iostream>
+#include<bits/stdc++.h>
+using namespace std;
+int main() {
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n,m;
+        cin>>n>>m;
+        int a[n];
+        int b=0;
+        for(int i=0;i<n;i++)
+        {
+            cin>>a[i];
+            if(a[i]%m==0)
+            b++;
+        }
+        
+        cout<<(1<<b)-1<<endl;
+    }
+	return 0;
+}
+==========================
+CHEF AND THREE DOGS
+#include <bits/stdc++.h>
+using namespace std;
+
+
+int main() 
+{
+	int t;
+	cin>>t;
+	for(int i=0; i<t; i++)
+	{
+	    double s,v;
+	    cin>>s>>v;
+	    cout<<fixed<<setprecision(6)<<(2*s)/(3*v)<<endl;
+	}
+}
+================
+ORDER BY XOR
+def solve(a, b, c):
+    msb = 29 
+    x = 0  
+    
+    while msb >= 0:
+        mask = 1 << msb
+        if (a & mask) != (c & mask):  
+            x |= mask  
+            if (b^x) < (c^x) and (a^x) < (b^x):  
+                return x
+            x ^= mask  
+        msb -= 1 
+    return -1
+for _ in range(int(input())):
+    a,b,c=map(int,input().split())
+    print(solve(a,b,c))
+
+========================
+CHEF AND NUMBERS
+/*************************************************
+
+ Author :- Traverser_25
+ Current Aim    :-  Reach pupil at CF
+ Moto   :-  Keep going, that's only way
+ 
+***************************************************/
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <deque>
+#include <cmath>
+#include <map>
+#include <vector>
+#include <set>
+#include <queue>
+#include <deque>
+#define MAX INT32_MAX
+#define fr(i, a, b) for (int i = a; i < b; i++)
+#define ll long long int
+#define pb emplace_back
+#define ppb pop_back
+#define all(x) x.begin(), x.end()
+#define rev(x) x.rbegin(), x.rend()
+#define read(x, n) fr(i, 0, n) cin >> x[i];
+#define pds(x)       \
+	for (auto i : x) \
+		cout << i << " ";
+#define endl '\n'
+using namespace std;
+
+ll gcd(ll a, ll b) { return b == 0 ? a : gcd(b, a % b); }
+
+ll lcm(ll a, ll b)
+{
+	ll l = (a * b) / gcd(a, b);
+	return l;
+}
+bool isp(int x) { return x && (!(x & (x - 1))); }
+ll max(ll a, ll b) { return a > b ? a : b; }
+ll min(ll a, ll b) { return a < b ? a : b; }
+const int mod = 1e9 + 7;
+
+int get_sum(int x)
+{
+	int sum = 0;
+	while (x > 0)
+	{
+		sum += (x % 10);
+		x /= 10;
+	}
+	return sum;
+}
+
+void Traverser()
+{
+	//--------------------Practice_logs---------------//
+	//Time:-
+	//Date:-
+	//Stuff:-
+	//Logic:-
+	//-------------------------------------------------//
+	int n, ans = 0;
+	cin >> n;
+	for (int i = 1; i <= 81; i++)
+	{
+		int f = i;
+		int s = get_sum(i);
+		int rest = n - (s + f);
+		if (rest > 0)
+		{
+			if (get_sum(rest) == i)
+				ans++;
+		}
+	}
+
+	cout << ans << endl;
+}
+
+int main()
+{
+	ios_base::sync_with_stdio(false);
+	cin.tie(NULL);
+	cout.tie(NULL);
+	ll TC;
+	TC = 1;
+//	cin >> TC;
+	while (TC--)
+	{
+		Traverser();
+	}
+
+	return 0;
+}
+==================
+MAJIN VEGETA
+#pragma GCC optimize("O2,no-stack-protector,unroll-loops,fast-math")
+#include <iostream>
+#include <bits/stdc++.h>
+#define ll long long
+#define PB push_back
+#define F first
+#define S second
+#define uset unordered_set
+#define umap unordered_map
+#define MP make_pair
+#define vt vector
+#define all(x) begin(x), end(x)
+#define sz(x) (int)x.size()
+#define REP(i, a) for (int i = 0; i < a; i++)
+#define pii pair<int, int>;
+#define pll pair<ll, ll>;
+
+using namespace std;
+
+ll n = 1000007;
+vt<ll>v(n);
+ll arr[1000008];
+
+void sieve() {
+    for (int i = 2; i <= n; i++) {
+        if (v[i]==0) {
+            for (int j = i; j <=n; j+=i) {
+                v[j]++;
+            }
+        }
+    }
+    ll tot = 0;
+    for (int i = 0; i <= n; i++) {
+        tot+=v[i];
+        arr[i]=tot;
+    }
+}
+
+typedef vector<ll> vl;
+typedef pair<ll,ll> pl;
+
+void solve()
+{
+    int a,b;
+    cin >> a >> b;
+    cout << arr[b-1]-arr[a-1] << endl;
+}
+
+int main()
+{
+	ios::sync_with_stdio(0);
+	cin.tie(0), cout.tie(0);
+	sieve();
+   	ll t;
+    cin >> t;
+    while (t--)
+    {
+        solve();
+    }
+    return 0;
+}
+========================
+DIGITAL CLOCK
+#include<bits/stdc++.h>
+# define ll long long int
+#define vec vector
+#define um unordered_map
+#define us unordered_set
+#define ms multiset
+#define mm multimap
+#define pb push_back
+#define st string
+#define ub upper_bound
+#define lb lower_bound
+using namespace std;
+const int m=1e9+7;
+
+int main(){
+    int t;
+    cin>>t;
+    while(t--){
+       int a,b;
+       cin>>a>>b;
+       vec<int>sd={0,1,2,3,4,5,6,7,8,9};
+       vec<int>df={00,11,22,33,44,55,66,77,88,99};
+       int count=0;
+       for(auto i:sd){
+           if(i<a&&i<b) count++;
+       }
+       for(int k=1;k<df.size();k++){
+           if(df[k]<a&&df[k]<b){
+               count++;
+           }
+       }
+       for(int l=1,j=1;l<sd.size(),j<df.size();l++,j++){
+           if(sd[l]<a&&df[j]<b) count++;
+           if(sd[l]<b&&df[j]<a) count++;
+       }
+       cout<<count<<endl;
+    }
+    return 0 ;
+}
+========================
+ALTERNATING DIVISIBILITY
+
+#include <iostream>
+using namespace std;
+
+int main() {
+	int t;
+	cin>>t;
+	while(t--){
+	  int n,i,count=0;
+	  cin>>n;
+	  i=n;
+	  while(count<n){
+	    if(count%2==0){
+	      cout<<i<<" ";
+	      count++;
+	    }
+	    else{
+	      cout<<2*i<<" ";
+	      count++;
+	      i--;
+	    }
+	  }
+	  cout<<endl;
+	  
+	  
+	}
+	return 0;
+}
+=======================
+JOGGING
+
+#include <iostream>
+using namespace std;
+/*
+relevant algorithm: Modular Exponentation
+*/
+#define ll long long
+const ll MOD = 1000000007;
+ll modexp(ll n){
+    
+    ll ans=1, x=2;
+    
+    while(n>0){
+        
+        if (n & 1)
+            ans = (ans * x) % MOD;
+        
+        n = n>>1;
+        x = (x * x) % MOD;
+    }
+    
+    return ans;
+}
+int main() {
+	int t;
+	cin>>t;
+    while(t--){
+        ll n,x;
+        cin>>n>>x;
+        cout << (x * modexp(n-1)) % 1000000007 << '\n';
+    }
+	return 0;
+}
+===========================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
